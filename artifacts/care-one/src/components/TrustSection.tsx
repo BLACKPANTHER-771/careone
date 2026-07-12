@@ -3,58 +3,75 @@ import { useRef, useState, useEffect } from 'react';
 
 const tiles = [
   {
-    title: "20% OFF Medicines",
-    accent: "shadow-blue-500/20 border-blue-500/30",
-    iconColor: "text-blue-500",
     icon: (
-      <svg className="w-16 h-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
-      </svg>
-    )
+      <div className="flex flex-col items-center justify-center text-center">
+        <span className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-600 drop-shadow-[0_0_15px_rgba(200,160,60,0.5)]">
+          20%
+        </span>
+        <span className="text-xl font-bold text-white/90">OFF</span>
+      </div>
+    ),
+    label: "On All Medicines"
   },
   {
-    title: "FREE Sunday BP Check",
-    subtitle: "Worth ₹20",
-    accent: "shadow-emerald-500/20 border-emerald-500/30",
-    iconColor: "text-emerald-500",
     icon: (
-      <svg className="w-16 h-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+      <svg className="w-12 h-12 overflow-visible" viewBox="0 0 24 24">
+        <motion.path 
+          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+          fill="none" stroke="#FF6B6B" strokeWidth="1.5"
+          animate={{ scale: [1, 1.2, 1] }}
+          transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
+          style={{ filter: "drop-shadow(0 0 8px rgba(255,107,107,0.6))" }}
+        />
       </svg>
-    )
+    ),
+    label: "FREE BP Check · Sundays · Worth ₹20"
   },
   {
-    title: "FREE Sunday Sugar Check",
-    subtitle: "Worth ₹30",
-    accent: "shadow-cyan-500/20 border-cyan-500/30",
-    iconColor: "text-cyan-500",
     icon: (
-      <svg className="w-16 h-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 2.25c-2.485 0-4.5 2.985-4.5 6.75s2.015 6.75 4.5 6.75 4.5-2.985 4.5-6.75-2.015-6.75-4.5-6.75ZM12 18a6 6 0 1 0 0 12 6 6 0 0 0 0-12Z" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a4.5 4.5 0 0 0 3-8" />
+      <svg className="w-12 h-12 overflow-visible" viewBox="0 0 24 24">
+        <motion.path 
+          d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"
+          fill="none" stroke="#00E5FF" strokeWidth="1.5"
+          animate={{ y: [0, -4, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          style={{ filter: "drop-shadow(0 0 8px rgba(0,229,255,0.6))" }}
+        />
       </svg>
-    )
+    ),
+    label: "FREE Sugar Check · Sundays · Worth ₹30"
   },
   {
-    title: "FREE Home Delivery",
-    accent: "shadow-yellow-500/20 border-yellow-500/30",
-    iconColor: "text-yellow-500",
     icon: (
-      <svg className="w-16 h-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
-      </svg>
-    )
+      <div className="relative w-12 h-12">
+        <svg className="w-full h-full overflow-visible" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: "rgba(255,255,255,0.8)" }}>
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        <motion.div
+          className="absolute left-1/2 bottom-0 w-1 rounded-full bg-cyan-400"
+          style={{ transform: "translateX(-50%)", filter: "drop-shadow(0 0 5px rgba(0,229,255,0.8))" }}
+          animate={{ height: [0, 20, 0], opacity: [0, 1, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeOut" }}
+        />
+      </div>
+    ),
+    label: "FREE Home Delivery"
   },
   {
-    title: "Open Daily",
-    subtitle: "8 AM – 11 PM",
-    accent: "shadow-white/10 border-white/20",
-    iconColor: "text-white",
     icon: (
-      <svg className="w-16 h-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+      <svg className="w-12 h-12 overflow-visible" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" fill="none" stroke="#FFD700" strokeWidth="1.5" style={{ filter: "drop-shadow(0 0 8px rgba(255,215,0,0.5))" }}/>
+        <motion.path 
+          d="M12 6v6l4 2" 
+          fill="none" stroke="#FFD700" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+          style={{ transformOrigin: "12px 12px" }}
+        />
       </svg>
-    )
+    ),
+    label: "Open Daily · 8 AM – 11 PM"
   }
 ];
 
@@ -94,8 +111,17 @@ export default function TrustSection() {
   }, [activeIndex]);
 
   return (
-    <section className="py-20 w-full relative z-10">
-      <div className="max-w-7xl mx-auto md:px-8">
+    <section className="py-24 w-full relative">
+      <div className="max-w-7xl mx-auto md:px-8 text-center">
+        
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-2xl font-light tracking-[0.2em] text-white/50 mb-12 uppercase"
+        >
+          Why CARE ONE?
+        </motion.h2>
         
         {/* Mobile Horizontal Carousel */}
         <div 
@@ -105,20 +131,31 @@ export default function TrustSection() {
           {tiles.map((tile, i) => (
             <div 
               key={i} 
-              className="snap-center shrink-0 w-[85vw] max-w-[320px]"
+              className="snap-center shrink-0 w-[85vw] max-w-[300px] h-[220px]"
             >
               <div
-                className={`glass-panel p-8 rounded-3xl flex flex-col items-center text-center h-full min-h-[240px] justify-center transition-all duration-300 ${tile.accent} ${activeIndex === i ? 'shadow-[0_8px_32px_rgba(0,0,0,0.4)] scale-100 opacity-100' : 'opacity-60 scale-95'}`}
+                className={`w-full h-full rounded-3xl p-6 flex flex-col items-center text-center justify-center transition-all duration-500`}
+                style={{
+                  background: 'linear-gradient(135deg, rgba(41,121,255,0.08), rgba(0,229,255,0.04))',
+                  borderTop: '1px solid rgba(255,255,255,0.2)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  backdropFilter: 'blur(20px)',
+                  boxShadow: activeIndex === i 
+                    ? '0 10px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(41,121,255,0.2), inset 0 1px 0 rgba(255,255,255,0.1)' 
+                    : '0 0 0 1px rgba(41,121,255,0.1), inset 0 1px 0 rgba(255,255,255,0.1)',
+                  transform: activeIndex === i ? 'scale(1)' : 'scale(0.95)',
+                  opacity: activeIndex === i ? 1 : 0.6
+                }}
               >
-                <div className={`mb-6 p-4 rounded-2xl bg-white/5 ${tile.iconColor}`}>
+                <div className="h-[60px] flex items-center justify-center mb-6">
                   {tile.icon}
                 </div>
-                <h3 className="text-2xl font-display font-semibold text-white mb-2 leading-tight">
-                  {tile.title}
-                </h3>
-                {tile.subtitle && (
-                  <p className="text-lg text-white/60 font-medium">
-                    {tile.subtitle}
+                <p className="text-lg font-medium text-white/90">
+                  {tile.label.split('·')[0]}
+                </p>
+                {tile.label.includes('·') && (
+                  <p className="text-sm text-white/50 mt-2">
+                    {tile.label.split('·').slice(1).join('·')}
                   </p>
                 )}
               </div>
@@ -131,7 +168,7 @@ export default function TrustSection() {
           {tiles.map((_, i) => (
             <div 
               key={i}
-              className={`h-2 rounded-full transition-all duration-300 ${activeIndex === i ? 'bg-primary w-6' : 'bg-white/20 w-2'}`}
+              className={`h-1.5 rounded-full transition-all duration-300 ${activeIndex === i ? 'bg-cyan-400 w-6 shadow-[0_0_8px_rgba(0,229,255,0.5)]' : 'bg-white/20 w-2'}`}
             />
           ))}
         </div>
@@ -146,17 +183,24 @@ export default function TrustSection() {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
               whileHover={{ y: -10, scale: 1.02 }}
-              className={`glass-panel p-8 rounded-3xl flex flex-col items-center text-center w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)] min-h-[240px] justify-center transition-all duration-300 ${tile.accent}`}
+              className="rounded-3xl p-6 flex flex-col items-center text-center justify-center w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)] min-h-[220px]"
+              style={{
+                background: 'linear-gradient(135deg, rgba(41,121,255,0.08), rgba(0,229,255,0.04))',
+                borderTop: '1px solid rgba(255,255,255,0.2)',
+                border: '1px solid rgba(255,255,255,0.08)',
+                backdropFilter: 'blur(20px)',
+                boxShadow: '0 8px 32px rgba(0,0,0,0.3), 0 0 0 1px rgba(41,121,255,0.1), inset 0 1px 0 rgba(255,255,255,0.1)'
+              }}
             >
-              <div className={`mb-6 p-4 rounded-2xl bg-white/5 ${tile.iconColor}`}>
+              <div className="h-[60px] flex items-center justify-center mb-6">
                 {tile.icon}
               </div>
-              <h3 className="text-2xl font-display font-semibold text-white mb-2 leading-tight">
-                {tile.title}
-              </h3>
-              {tile.subtitle && (
-                <p className="text-lg text-white/60 font-medium">
-                  {tile.subtitle}
+              <p className="text-xl font-medium text-white/90">
+                {tile.label.split('·')[0]}
+              </p>
+              {tile.label.includes('·') && (
+                <p className="text-sm text-white/50 mt-2">
+                  {tile.label.split('·').slice(1).join('·')}
                 </p>
               )}
             </motion.div>

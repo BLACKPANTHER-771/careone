@@ -1,0 +1,314 @@
+OVERRIDE ALL PREVIOUS LAYOUT DECISIONS.
+
+The current design is still too generic.
+
+It resembles a premium SaaS landing page.
+
+I DO NOT WANT A WEBSITE.
+
+I WANT A CINEMATIC DIGITAL EXPERIENCE.
+
+Imagine this project is being designed by the teams behind Apple Vision Pro, Iron Man's holographic interfaces, and an Awwwards Site of the Day winner.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DO NOT THINK IN SECTIONS.
+
+Think in SCENES.
+
+The user should feel they are travelling through one continuous futuristic healthcare environment.
+
+Every scroll should feel like entering another room.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+THE WEBSITE IS INSIDE A LIVING FUTURISTIC HEALTH DOME.
+
+The entire background becomes one enormous architectural structure.
+
+Imagine
+
+• Massive curved holographic walls.
+
+• Transparent floating medical interfaces.
+
+• Blue volumetric light.
+
+• Golden light beams.
+
+• Glass architecture.
+
+• Infinite depth.
+
+• Soft moving fog.
+
+• Cinematic lighting.
+
+• Floating particles.
+
+The website should feel like it exists inside a futuristic medical headquarters rather than on a webpage.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+THE HERO
+
+The user enters a gigantic circular Health Dome.
+
+The camera slowly moves forward.
+
+At the center floats an enormous Living Health Core.
+
+The Core is NOT a loading spinner.
+
+The Core is a glowing blue energy sphere.
+
+Golden rings orbit around it.
+
+Thousands of tiny particles escape.
+
+Soft energy waves ripple outward.
+
+Everything emits premium cinematic lighting.
+
+Behind the Core,
+
+a gigantic holographic DNA ribbon rotates slowly around the dome walls.
+
+The DNA is architectural.
+
+It is part of the environment.
+
+Not a small decorative object.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+THE LOGO
+
+CARE ONE does not simply appear.
+
+It is born.
+
+Tiny particles gather.
+
+Golden rings rotate.
+
+Blue light condenses.
+
+The logo assembles.
+
+One golden pulse illuminates the entire dome.
+
+Maximum duration:
+3 seconds.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CAMERA
+
+Do NOT create a flat scrolling page.
+
+Create cinematic camera movement.
+
+Every scroll slightly changes perspective.
+
+Small parallax.
+
+Layered depth.
+
+Foreground.
+
+Midground.
+
+Background.
+
+The website should feel three-dimensional.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+THE BACKGROUND MUST NEVER LOOK EMPTY.
+
+Behind every section there should be
+
+• Giant holographic medical structures.
+
+• Floating transparent rings.
+
+• Moving energy lines.
+
+• Massive DNA architecture.
+
+• Circular energy tunnels.
+
+• Blue atmospheric lighting.
+
+• Soft golden reflections.
+
+• Floating glass particles.
+
+Everything should feel alive.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SERVICES
+
+Do NOT use flat cards.
+
+Each service exists inside its own holographic pod.
+
+Imagine floating museum exhibits.
+
+Medicines
+
+A transparent futuristic medicine vault.
+
+Cosmetics
+
+Luxury illuminated cosmetic display.
+
+Supplements
+
+A floating nutrition chamber.
+
+Injections
+
+A rotating medical equipment pod.
+
+Each pod slowly rotates.
+
+Each pod is surrounded by holographic rings.
+
+Each pod has cinematic lighting.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHEN THE USER TAPS A POD
+
+The entire pod rotates.
+
+The back appears.
+
+Instead of expanding.
+
+The pod flips like a premium museum display.
+
+At the bottom always display
+
+TURN FOR MORE INFO
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+OFFERS
+
+The 20% offer should NOT be a card.
+
+It should be projected inside a floating energy crystal suspended in the dome.
+
+Golden particles orbit continuously.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+BP & SUGAR CHECK
+
+These should appear as futuristic holographic medical scanners.
+
+Not cards.
+
+The BP scanner glows with a living heartbeat.
+
+The Sugar scanner contains a floating digital glucose visualization.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+HOME DELIVERY
+
+Instead of showing a scooter.
+
+A beam of blue energy travels through a futuristic city map.
+
+The light reaches a glowing home.
+
+This visually explains delivery without text.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+LOCATION
+
+Instead of a normal map.
+
+Build a holographic navigation table.
+
+The route draws itself using animated light.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SCROLL TRANSITIONS
+
+Every section emerges from the previous one.
+
+No hard breaks.
+
+No obvious cards floating on empty backgrounds.
+
+The website should feel like one uninterrupted cinematic journey.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ANIMATIONS
+
+Every visible object should have life.
+
+Nothing is static.
+
+Examples
+
+Particles drifting.
+
+DNA rotating.
+
+Golden rings orbiting.
+
+Light rays moving.
+
+Glass reflections changing.
+
+Energy travelling.
+
+Background breathing.
+
+Objects floating slowly.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+VISUAL DENSITY
+
+Increase environmental storytelling by 500%.
+
+Reduce text.
+
+Increase premium visuals.
+
+Increase architectural scale.
+
+Increase cinematic lighting.
+
+Increase depth.
+
+Increase realism.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FINAL GOAL
+
+Someone should think
+
+"This doesn't look like a pharmacy website.
+
+It looks like the launch experience of a billion-dollar healthcare company."
+
+Never resemble a dashboard.
+
+Never resemble a template.
+
+Never resemble a generic landing page.
+
+The page itself should become unforgettable.

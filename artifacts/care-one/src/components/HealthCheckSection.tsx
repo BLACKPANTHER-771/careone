@@ -1,118 +1,125 @@
 import { motion } from 'framer-motion';
+import { useScrollParallax } from '../hooks/useScrollParallax';
 
 export default function HealthCheckSection() {
-  return (
-    <section className="py-24 w-full relative z-10">
-      <div className="max-w-6xl mx-auto px-4 md:px-8">
-        
-        <div className="text-center mb-16">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-display font-bold text-white mb-4"
-          >
-            Sunday Wellness
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-xl text-white/50"
-          >
-            Complimentary health monitoring every weekend.
-          </motion.p>
-        </div>
+  const { ref, y } = useScrollParallax(0.1);
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+  return (
+    <section ref={ref} className="py-24 w-full relative">
+      
+      <motion.p 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        className="text-center text-xs text-white/40 tracking-[0.3em] uppercase mb-16"
+      >
+        Diagnostic Scanners
+      </motion.p>
+
+      <div className="max-w-6xl mx-auto px-4 md:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
           
-          {/* BP Check Panel */}
+          {/* Scanner Pod 1: BP / Heartbeat */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="glass-panel p-10 rounded-[2.5rem] relative overflow-hidden group"
+            className="glass-panel p-8 rounded-3xl relative overflow-hidden flex flex-col"
+            style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.3), 0 0 40px rgba(41,121,255,0.15)' }}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-destructive/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <p className="text-xs tracking-widest text-white/40 uppercase mb-8">Blood Pressure</p>
             
-            <div className="flex flex-col md:flex-row items-center gap-8 relative z-10">
-              <div className="w-32 h-32 relative shrink-0">
-                {/* Abstract Heart Shape SVG */}
-                <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_15px_rgba(255,107,107,0.5)]">
-                  <defs>
-                    <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#FF6B6B" />
-                      <stop offset="100%" stopColor="#C92A2A" />
-                    </linearGradient>
-                  </defs>
-                  <motion.path 
-                    d="M50 85C50 85 15 60 15 35C15 20 28 10 40 10C46 10 50 15 50 15C50 15 54 10 60 10C72 10 85 20 85 35C85 60 50 85 50 85Z" 
-                    fill="url(#heartGrad)"
-                    animate={{ scale: [1, 1.05, 1, 1.05, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", times: [0, 0.15, 0.3, 0.45, 1] }}
-                  />
-                  {/* Subtle grid lines for anatomical/technical feel */}
-                  <path d="M10 50 H90 M50 10 V90" stroke="white" strokeWidth="0.5" strokeOpacity="0.2" fill="none" />
-                </svg>
-              </div>
+            <div className="relative w-full h-32 flex items-center justify-center mb-8">
+              {/* SVG ECG Waveform */}
+              <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="w-[80%] h-full opacity-80">
+                <defs>
+                  <linearGradient id="glowCyan" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="rgba(0,229,255,0.3)" />
+                    <stop offset="100%" stopColor="transparent" />
+                  </linearGradient>
+                </defs>
+                {/* Glow below path */}
+                <polygon points="0,100 0,50 30,50 40,20 50,80 60,10 70,50 100,50 100,100" fill="url(#glowCyan)" />
+                {/* The ECG line */}
+                <path d="M 0,50 L 30,50 L 40,20 L 50,80 L 60,10 L 70,50 L 100,50" fill="none" stroke="#00E5FF" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+              </svg>
 
-              <div className="text-center md:text-left">
-                <h3 className="text-3xl md:text-4xl font-display font-bold text-white mb-2 tracking-tight">FREE BP CHECK</h3>
-                <div className="flex items-center justify-center md:justify-start gap-4 mb-4">
-                  <span className="text-xl text-accent font-medium tracking-wide">Worth ₹20</span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
-                  <span className="text-lg text-white/60">Every Sunday</span>
+              {/* Traveling Scan Line */}
+              <motion.div 
+                className="absolute top-0 bottom-0 w-[2px] bg-white/50 shadow-[0_0_10px_rgba(255,255,255,0.8)]"
+                animate={{ left: ['10%', '90%'] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+              />
+            </div>
+
+            <div className="flex flex-col items-center justify-center flex-1 space-y-4">
+              <motion.svg viewBox="0 0 24 24" className="w-12 h-12" animate={{ scale: [1, 1.3, 1] }} transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}>
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#00E5FF" style={{ filter: 'drop-shadow(0 0 10px rgba(0,229,255,0.6))' }} />
+              </motion.svg>
+              
+              <div className="text-center">
+                <p className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-600 mb-1 tracking-widest">FREE CHECK</p>
+                <div className="flex items-center justify-center gap-2 text-sm">
+                  <span className="text-white/50">Every Sunday</span>
+                  <span className="w-1 h-1 rounded-full bg-white/20" />
+                  <span className="text-white/30">Worth ₹20</span>
                 </div>
-                <p className="text-white/40 text-sm leading-relaxed max-w-sm">
-                  Keep your heart health in check. Our staff provides accurate blood pressure readings in minutes.
-                </p>
               </div>
             </div>
           </motion.div>
 
-          {/* Sugar Check Panel */}
+          {/* Scanner Pod 2: Glucose */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="glass-panel p-10 rounded-[2.5rem] relative overflow-hidden group"
+            className="glass-panel p-8 rounded-3xl relative overflow-hidden flex flex-col"
+            style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.3), 0 0 40px rgba(41,121,255,0.15)' }}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <p className="text-xs tracking-widest text-white/40 uppercase mb-8">Blood Glucose</p>
             
-            <div className="flex flex-col md:flex-row items-center gap-8 relative z-10">
-              <div className="w-32 h-32 relative shrink-0">
-                {/* Abstract Blood/Sugar Drop Shape SVG */}
-                <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_15px_rgba(0,229,255,0.5)]">
-                  <defs>
-                    <linearGradient id="dropGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#00E5FF" />
-                      <stop offset="100%" stopColor="#0077FF" />
-                    </linearGradient>
-                  </defs>
-                  <motion.path 
-                    d="M50 10 C50 10 20 45 20 65 C20 81.568 33.431 95 50 95 C66.568 95 80 81.568 80 65 C80 45 50 10 50 10 Z" 
-                    fill="url(#dropGrad)"
-                    animate={{ y: [0, -5, 0] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                  />
-                  {/* Inner highlight */}
-                  <path d="M35 65 A15 15 0 0 1 50 50" stroke="white" strokeWidth="2" strokeLinecap="round" strokeOpacity="0.4" fill="none" />
-                </svg>
+            <div className="relative w-full h-32 flex items-center justify-center mb-8">
+              {/* Circular Gauge */}
+              <svg viewBox="0 0 100 100" className="w-32 h-32 transform -rotate-90">
+                <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="6" strokeDasharray="188 251" strokeLinecap="round" />
+                <motion.circle 
+                  cx="50" cy="50" r="40" fill="none" stroke="#00E5FF" strokeWidth="6" 
+                  strokeLinecap="round"
+                  animate={{ strokeDasharray: ['113 251', '140 251', '113 251'] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                  style={{ filter: 'drop-shadow(0 0 5px rgba(0,229,255,0.5))' }}
+                />
+              </svg>
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <span className="text-xl font-mono text-cyan-400 font-bold">--</span>
+                <span className="text-[8px] text-cyan-400/60 uppercase tracking-widest">mg/dL</span>
               </div>
+            </div>
 
-              <div className="text-center md:text-left">
-                <h3 className="text-3xl md:text-4xl font-display font-bold text-white mb-2 tracking-tight">FREE SUGAR CHECK</h3>
-                <div className="flex items-center justify-center md:justify-start gap-4 mb-4">
-                  <span className="text-xl text-accent font-medium tracking-wide">Worth ₹30</span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
-                  <span className="text-lg text-white/60">Every Sunday</span>
+            <div className="flex flex-col items-center justify-center flex-1 space-y-4">
+              {/* Wave pattern — uses stroke-dashoffset shimmer instead of path morphing */}
+              <svg viewBox="0 0 100 20" className="w-24 h-6" overflow="visible">
+                <path 
+                  d="M 0,10 Q 16.6,-10 33.3,10 T 66.6,10 T 100,10" 
+                  fill="none" stroke="#10B981" strokeWidth="2"
+                  style={{ filter: 'drop-shadow(0 0 5px rgba(16,185,129,0.5))' }}
+                />
+                <motion.path 
+                  d="M 0,10 Q 16.6,-10 33.3,10 T 66.6,10 T 100,10" 
+                  fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="2"
+                  strokeDasharray="30 200"
+                  animate={{ strokeDashoffset: [0, -230] }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                />
+              </svg>
+              
+              <div className="text-center">
+                <p className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-600 mb-1 tracking-widest">FREE CHECK</p>
+                <div className="flex items-center justify-center gap-2 text-sm">
+                  <span className="text-white/50">Every Sunday</span>
+                  <span className="w-1 h-1 rounded-full bg-white/20" />
+                  <span className="text-white/30">Worth ₹30</span>
                 </div>
-                <p className="text-white/40 text-sm leading-relaxed max-w-sm">
-                  Stay on top of your glucose levels with our quick and safe complimentary testing.
-                </p>
               </div>
             </div>
           </motion.div>

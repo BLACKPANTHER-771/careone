@@ -11,24 +11,18 @@ import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import PulseIdentity from './components/PulseIdentity';
 import CareDock from './components/CareDock';
+import DomeEnvironment from './components/DomeEnvironment';
 
 function MainLayout() {
   return (
-    <div className="min-h-screen pb-28 md:pb-0 bg-background text-foreground overflow-x-hidden selection:bg-cyan-500/30">
+    <div className="relative min-h-screen pb-28 md:pb-0 z-10 selection:bg-cyan-500/30">
       <HeroSection />
-      <PulseIdentity height="h-24 md:h-32" />
       <TrustSection />
-      <PulseIdentity height="h-24 md:h-32" />
       <ServicesSection />
-      <PulseIdentity height="h-24 md:h-32" />
       <OfferSection />
-      <PulseIdentity height="h-24 md:h-32" />
       <HealthCheckSection />
-      <PulseIdentity height="h-24 md:h-32" />
       <DeliverySection />
-      <PulseIdentity height="h-24 md:h-32" />
       <LocationSection />
-      <PulseIdentity height="h-24 md:h-32" />
       <ContactSection />
       <PulseIdentity height="h-24" isEnd />
       <Footer />
@@ -44,6 +38,7 @@ export default function App() {
       {!introComplete && <IntroAnimation onComplete={() => setIntroComplete(true)} />}
       {introComplete && (
         <>
+          <DomeEnvironment />
           <MainLayout />
           <CareDock />
         </>
