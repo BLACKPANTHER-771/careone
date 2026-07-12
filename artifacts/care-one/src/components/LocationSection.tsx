@@ -71,10 +71,12 @@ export default function LocationSection() {
                   height="100%"
                   style={{
                     border: 0,
+                    outline: 'none',
                     display: 'block',
                     opacity: mapLoaded ? 1 : 0,
                     transition: 'opacity 0.6s ease',
                     filter: 'saturate(1.6) contrast(1.05) brightness(1.05) hue-rotate(5deg)',
+                    pointerEvents: mapLoaded ? 'auto' : 'none',
                   }}
                   allowFullScreen
                   loading="lazy"
