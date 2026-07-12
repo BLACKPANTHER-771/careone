@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Map, Phone } from 'lucide-react';
+import RippleButton from './RippleButton';
 
 export default function LocationSection() {
   return (
@@ -39,23 +40,22 @@ export default function LocationSection() {
             </div>
 
             <div className="flex flex-col gap-4 w-full md:w-auto shrink-0">
-              <a 
+              <RippleButton 
                 href="https://maps.google.com/?q=Paramount+GolfMart+Surajpur+Greater+Noida"
                 target="_blank"
-                rel="noopener noreferrer"
                 className="group flex items-center justify-center gap-4 bg-white/10 hover:bg-white/20 border border-white/20 text-white px-8 py-4 rounded-xl font-medium tracking-wide transition-all hover:scale-105"
               >
-                <Map className="w-5 h-5 text-primary" />
-                <span>Open Google Maps</span>
-              </a>
+                <Map className="w-5 h-5 text-primary relative z-10" />
+                <span className="relative z-10">Open Google Maps</span>
+              </RippleButton>
 
-              <a 
+              <RippleButton 
                 href="tel:8826775758"
                 className="group flex items-center justify-center gap-4 bg-transparent hover:bg-white/5 border border-white/10 text-white px-8 py-4 rounded-xl font-medium tracking-wide transition-all hover:scale-105"
               >
-                <Phone className="w-5 h-5 text-cyan-400" />
-                <span>Call Store</span>
-              </a>
+                <Phone className="w-5 h-5 text-cyan-400 relative z-10" />
+                <span className="relative z-10">Call Store</span>
+              </RippleButton>
             </div>
 
           </div>

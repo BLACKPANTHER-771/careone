@@ -1,0 +1,407 @@
+This prompt extends the previous Creative Direction. Treat it as mandatory implementation rules.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CORE PHILOSOPHY
+
+The landing page should feel like ONE continuous premium experience.
+
+Do not design isolated sections.
+
+Every section should visually flow into the next using elegant transitions, lighting and the "Pulse of Care".
+
+The user should feel they are travelling through one premium healthcare journey.
+
+The page should NEVER resemble a dashboard, admin panel or medical template.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+MOBILE FIRST
+
+Design for smartphones first.
+
+Target screen width:
+
+375px–430px
+
+Everything should be optimized for thumb interaction.
+
+Buttons must be large.
+
+Text must be readable without zooming.
+
+No tiny touch targets.
+
+No hover interactions.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+VISUAL STORYTELLING
+
+People remember images more than text.
+
+Use as much visual storytelling as possible.
+
+Every important feature should have a premium 3D illustration or cinematic visual instead of depending only on text.
+
+Examples
+
+20% OFF
+
+Instead of plain text
+
+Use a floating premium energy crystal.
+
+━━━━━━━━━━━━
+
+Medicines
+
+Instead of an icon
+
+Show a futuristic transparent medicine cabinet with glowing medicine shelves.
+
+━━━━━━━━━━━━
+
+Cosmetics
+
+Show elegant floating premium cosmetic bottles displayed on illuminated glass.
+
+━━━━━━━━━━━━
+
+Supplements
+
+Show a premium supplement container floating on a glowing circular pedestal.
+
+━━━━━━━━━━━━
+
+Injection
+
+Show a futuristic medical injector inside a holographic showcase.
+
+━━━━━━━━━━━━
+
+Free Home Delivery
+
+Show a glowing animated light beam travelling from the pharmacy to a modern house.
+
+━━━━━━━━━━━━
+
+BP Check
+
+Represent using a premium animated heart monitor.
+
+━━━━━━━━━━━━
+
+Sugar Check
+
+Represent using a glowing digital glucose device.
+
+━━━━━━━━━━━━
+
+Location
+
+Instead of a flat map
+
+Create a luxury glass navigation card with a glowing route leading to CARE ONE.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PREMIUM GLASS DESIGN
+
+Every panel should feel like premium glass.
+
+Soft reflections.
+
+Soft shadows.
+
+Rounded corners.
+
+Blurred background.
+
+Very subtle glow.
+
+Never excessive.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SERVICE CARDS
+
+Create four premium flip cards.
+
+Front Side
+
+Large 3D illustration.
+
+Large title.
+
+Bottom text
+
+TURN FOR MORE INFO
+
+Back Side
+
+Short details.
+
+Available
+
+Premium Quality
+
+Trusted Products
+
+20% OFF (where applicable)
+
+Flip animation should feel realistic.
+
+Do not simply rotate.
+
+Add depth.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TRUST STRIP
+
+Display as swipeable premium cards.
+
+Cards should contain
+
+20% OFF Medicines
+
+FREE Sunday BP Check (Worth ₹20)
+
+FREE Sunday Sugar Check (Worth ₹30)
+
+FREE Home Delivery
+
+Open Daily
+8 AM–11 PM
+
+Each card should contain a large colorful illustration.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+LIVE STATUS
+
+Automatically detect device time.
+
+If between 8 AM and 11 PM
+
+Show
+
+🟢 OPEN NOW
+
+Otherwise
+
+🔴 CLOSED
+
+Opens Tomorrow at 8:00 AM
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+GYROSCOPE
+
+On supported mobile devices
+
+The background
+
+Particles
+
+Pulse line
+
+Living logo
+
+should slightly move with device tilt.
+
+Movement should remain subtle.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+BUTTONS
+
+Call Now
+
+Open Google Maps
+
+Call Store
+
+All buttons should include
+
+Ripple animation
+
+Soft glow
+
+Micro scale animation
+
+Premium tactile feel
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SCROLL EXPERIENCE
+
+Every section should reveal differently.
+
+Never repeat the same animation.
+
+Examples
+
+Hero
+
+Fade upward.
+
+Trust cards
+
+Slide one after another.
+
+Services
+
+Flip slightly into view.
+
+Offer crystal
+
+Scale with golden particles.
+
+Health cards
+
+Fade with heartbeat pulse.
+
+Location
+
+Navigation route draws itself.
+
+Footer
+
+Pulse reconnects into CARE ONE logo.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+BACKGROUND
+
+Background should never be static.
+
+Use
+
+Very slow moving gradients
+
+Soft particles
+
+Volumetric lighting
+
+Subtle golden rays
+
+Depth layers
+
+Large negative space
+
+Keep movement minimal to preserve premium feel.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PERFORMANCE
+
+Animations must remain smooth at 60 FPS.
+
+Optimize all effects.
+
+Lazy load non-critical visuals.
+
+Compress images.
+
+Use GPU accelerated transforms.
+
+Avoid animation lag.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+MICRO INTERACTIONS
+
+Every tap should produce feedback.
+
+Cards react naturally.
+
+Buttons ripple.
+
+Images slightly elevate.
+
+Icons softly glow.
+
+Glass reflects light while scrolling.
+
+The page should feel alive.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TYPOGRAPHY
+
+Use premium fonts similar to
+
+SF Pro Display
+
+General Sans
+
+Satoshi
+
+Clash Display
+
+Large headings.
+
+Minimal text.
+
+Visual-first communication.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CONTENT
+
+Include EXACT business information.
+
+CARE ONE PHARMACY
+
+20% OFF on Medicines
+
+FREE Sunday BP Check
+Worth ₹20
+
+FREE Sunday Sugar Check
+Worth ₹30
+
+FREE Home Delivery
+
+Medicines
+
+Cosmetics
+
+Supplements
+
+Full Range of Injections
+
+Open Daily
+8:00 AM–11:00 PM
+
+Phone
+
+8826775758
+
+Address
+
+Shop No. PL-012
+BGH-A
+Site-C
+Paramount GolfMart
+Below ICICI Bank
+Opposite Sector Zeta
+Surajpur
+Greater Noida
+Uttar Pradesh 201306
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FINAL EXPERIENCE
+
+The visitor should understand everything within 5 seconds.
+
+The name CARE ONE should remain memorable.
+
+The website should look like a premium healthcare brand launching a flagship product, not a local pharmacy advertising discounts.
+
+Every interaction should reinforce trust, care, speed and simplicity.
+
+Aim for a result worthy of an Awwwards nomination while remaining practical and intuitive for everyday pharmacy customers.

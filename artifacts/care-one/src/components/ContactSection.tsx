@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Phone } from 'lucide-react';
+import RippleButton from './RippleButton';
 
 export default function ContactSection() {
   return (
@@ -51,12 +52,12 @@ export default function ContactSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <a 
+          <RippleButton 
             href="tel:8826775758"
             className="inline-flex items-center justify-center bg-white text-black px-12 py-5 rounded-full font-bold text-xl tracking-widest hover:bg-cyan-400 transition-colors duration-300 shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(0,229,255,0.5)]"
           >
-            CALL NOW
-          </a>
+            <span className="relative z-10">CALL NOW</span>
+          </RippleButton>
         </motion.div>
 
       </div>

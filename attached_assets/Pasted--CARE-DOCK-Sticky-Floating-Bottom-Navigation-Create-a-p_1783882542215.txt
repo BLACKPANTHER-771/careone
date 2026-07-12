@@ -1,0 +1,229 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CARE DOCK (Sticky Floating Bottom Navigation)
+
+Create a premium floating action dock fixed at the bottom of the mobile screen.
+
+This dock should remain visible throughout the website but never feel intrusive.
+
+Inspired by:
+Apple VisionOS
+Dynamic Island
+Nothing OS
+Modern fintech apps
+
+STYLE
+
+• Floating glassmorphism container
+• Soft background blur (20-30px)
+• Rounded pill shape (32-40px radius)
+• Premium depth
+• Soft shadow
+• Thin liquid-glass border
+• Slight reflection on top edge
+• Floating 12-16px above bottom safe area
+• Width: 90-94% of screen
+• Height: 64-72px
+• Respect iPhone and Android safe areas
+
+The dock should look like a premium physical object floating above the website.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+BUTTONS
+
+Three equally sized buttons.
+
+━━━━━━━━━━━━━━
+
+1.
+
+📞
+
+CALL NOW
+
+Number:
+8826775758
+
+Primary Action
+
+Tap instantly opens phone dialer.
+
+━━━━━━━━━━━━━━
+
+2.
+
+📍
+
+DIRECTIONS
+
+Tap opens Google Maps directly to
+
+CARE ONE PHARMACY
+
+Shop No. PL-012
+BGH-A
+Site-C
+Paramount GolfMart
+Below ICICI Bank
+Opposite Sector Zeta
+Surajpur
+Greater Noida
+Uttar Pradesh 201306
+
+━━━━━━━━━━━━━━
+
+3.
+
+💬
+
+WHATSAPP
+
+Tap opens WhatsApp chat with the pharmacy.
+
+Pre-filled message:
+
+Hello CARE ONE, I would like to enquire about medicines.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+BUTTON DESIGN
+
+Each button contains
+
+Large colorful icon
+
+Small title below icon
+
+Large touch area
+
+48px minimum touch target
+
+Icons
+
+Phone
+Bright Emerald
+
+Location
+Bright Orange
+
+WhatsApp
+WhatsApp Green
+
+Icons should be modern, slightly oversized and visually dominant.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+MICRO INTERACTIONS
+
+Tap
+
+• Premium ripple animation
+• Soft scale to 96%
+• Spring back
+• Tiny light sweep
+• Gentle vibration on supported devices
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SCROLL BEHAVIOUR
+
+User scrolls down
+
+↓
+
+Dock slides upward smoothly into view.
+
+User scrolls upward
+
+↓
+
+Dock slightly minimizes to avoid covering content.
+
+After 2 seconds of inactivity
+
+↓
+
+Return to normal size.
+
+Never disappear completely.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+IDLE ANIMATION
+
+Every 20 seconds
+
+A soft blue pulse travels across the dock from left to right.
+
+Only once.
+
+Very subtle.
+
+The CALL button emits a faint glow for 1 second.
+
+Do not repeat frequently.
+
+Avoid distraction.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+GLASS EFFECT
+
+Use premium liquid-glass rendering.
+
+Blurred background.
+
+Soft internal reflections.
+
+Dynamic highlights.
+
+Edge glow reacts to page lighting.
+
+Dock should feel like a floating premium object rather than a fixed navigation bar.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ACCESSIBILITY
+
+Large text.
+
+Large buttons.
+
+High contrast.
+
+Easy to press with one thumb.
+
+Perfect for users aged 40–60.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PERFORMANCE
+
+Use GPU-accelerated transforms.
+
+60 FPS animations.
+
+No lag.
+
+No layout shifts.
+
+No excessive effects.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+IMPORTANT
+
+The dock should feel like an extension of the CARE ONE brand.
+
+Elegant.
+
+Minimal.
+
+Premium.
+
+Helpful.
+
+Never distracting.
+
+The user should instinctively know that calling, getting directions or messaging the pharmacy is always one tap away.

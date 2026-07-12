@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useRef, useState, useEffect } from 'react';
 
 const tiles = [
   {
@@ -58,11 +59,85 @@ const tiles = [
 ];
 
 export default function TrustSection() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const handleScroll = () => {
+    if (!scrollRef.current) return;
+    const container = scrollRef.current;
+    const center = container.scrollLeft + container.clientWidth / 2;
+    
+    let closestIndex = 0;
+    let minDistance = Infinity;
+
+    Array.from(container.children).forEach((child, index) => {
+      const childCenter = (child as HTMLElement).offsetLeft + (child as HTMLElement).clientWidth / 2;
+      const distance = Math.abs(center - childCenter);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    if (closestIndex !== activeIndex) {
+      setActiveIndex(closestIndex);
+    }
+  };
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (el) {
+      el.addEventListener('scroll', handleScroll, { passive: true });
+      handleScroll(); // init
+      return () => el.removeEventListener('scroll', handleScroll);
+    }
+  }, [activeIndex]);
+
   return (
     <section className="py-20 w-full relative z-10">
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
+      <div className="max-w-7xl mx-auto md:px-8">
         
-        <div className="flex flex-wrap justify-center gap-6 md:gap-8">
+        {/* Mobile Horizontal Carousel */}
+        <div 
+          ref={scrollRef}
+          className="md:hidden flex overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-8 gap-4 px-[7.5vw]"
+        >
+          {tiles.map((tile, i) => (
+            <div 
+              key={i} 
+              className="snap-center shrink-0 w-[85vw] max-w-[320px]"
+            >
+              <div
+                className={`glass-panel p-8 rounded-3xl flex flex-col items-center text-center h-full min-h-[240px] justify-center transition-all duration-300 ${tile.accent} ${activeIndex === i ? 'shadow-[0_8px_32px_rgba(0,0,0,0.4)] scale-100 opacity-100' : 'opacity-60 scale-95'}`}
+              >
+                <div className={`mb-6 p-4 rounded-2xl bg-white/5 ${tile.iconColor}`}>
+                  {tile.icon}
+                </div>
+                <h3 className="text-2xl font-display font-semibold text-white mb-2 leading-tight">
+                  {tile.title}
+                </h3>
+                {tile.subtitle && (
+                  <p className="text-lg text-white/60 font-medium">
+                    {tile.subtitle}
+                  </p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Carousel Indicators (Mobile) */}
+        <div className="md:hidden flex justify-center gap-2 pb-4">
+          {tiles.map((_, i) => (
+            <div 
+              key={i}
+              className={`h-2 rounded-full transition-all duration-300 ${activeIndex === i ? 'bg-primary w-6' : 'bg-white/20 w-2'}`}
+            />
+          ))}
+        </div>
+
+        {/* Desktop Grid (md+) */}
+        <div className="hidden md:flex flex-wrap justify-center gap-6 lg:gap-8 px-4">
           {tiles.map((tile, i) => (
             <motion.div
               key={i}
@@ -71,7 +146,7 @@ export default function TrustSection() {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
               whileHover={{ y: -10, scale: 1.02 }}
-              className={`glass-panel p-8 rounded-3xl flex flex-col items-center text-center w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)] min-h-[240px] justify-center transition-all duration-300 ${tile.accent}`}
+              className={`glass-panel p-8 rounded-3xl flex flex-col items-center text-center w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)] min-h-[240px] justify-center transition-all duration-300 ${tile.accent}`}
             >
               <div className={`mb-6 p-4 rounded-2xl bg-white/5 ${tile.iconColor}`}>
                 {tile.icon}
