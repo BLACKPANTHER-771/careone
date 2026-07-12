@@ -45,43 +45,31 @@ export default function LocationSection() {
             {/* Nav Terminal Content */}
             <div className="flex-1 w-full relative">
               
-              {/* Map SVG */}
-              <div className="w-full h-[180px] mb-8 relative border border-white/5 rounded-lg overflow-hidden bg-white/5">
-                <svg viewBox="0 0 300 200" preserveAspectRatio="none" className="w-full h-full opacity-60">
-                  {/* Grid Lines */}
-                  <path d="M50,0 V200 M100,0 V200 M150,0 V200 M200,0 V200 M250,0 V200" stroke="rgba(41,121,255,0.2)" strokeWidth="1" />
-                  <path d="M0,50 H300 M0,100 H300 M0,150 H300" stroke="rgba(41,121,255,0.2)" strokeWidth="1" />
-                  
-                  {/* Street geometry */}
-                  <path d="M-20,120 L80,120 L130,80 L220,80" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
-                  
-                  {/* Glowing Route path */}
-                  <motion.path 
-                    d="M-20,120 L80,120 L130,80 L220,80" 
-                    fill="none" stroke="#00E5FF" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"
-                    strokeDasharray="400"
-                    initial={{ strokeDashoffset: 400 }}
-                    whileInView={{ strokeDashoffset: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 2, ease: "easeInOut", delay: 0.5 }}
-                    style={{ filter: 'drop-shadow(0 0 5px rgba(0,229,255,0.8))' }}
-                  />
-                  
-                  {/* Destination Marker */}
-                  <motion.circle 
-                    cx="220" cy="80" r="4" fill="#FFD700"
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: [0, 1.5, 1] }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 2.3 }}
-                    style={{ filter: 'drop-shadow(0 0 8px rgba(255,215,0,1))' }}
-                  />
-                  <motion.circle
-                    cx="220" cy="80" r="12" fill="none" stroke="#FFD700" strokeWidth="1"
-                    animate={{ scale: [1, 2], opacity: [1, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeOut", delay: 2.5 }}
-                  />
-                </svg>
+              {/* Google Maps Embed */}
+              <div className="w-full h-[240px] mb-8 relative rounded-2xl overflow-hidden border border-white/10"
+                style={{ boxShadow: '0 0 0 1px rgba(41,121,255,0.2), 0 8px 32px rgba(0,0,0,0.5)' }}>
+                <iframe
+                  title="CARE ONE Pharmacy Location"
+                  src="https://maps.google.com/maps?q=Paramount+GolfMart+Surajpur+Greater+Noida+Uttar+Pradesh&output=embed&hl=en&z=16"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0, display: 'block' }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+                {/* Holographic overlay frame */}
+                <div className="absolute inset-0 pointer-events-none rounded-2xl"
+                  style={{
+                    background: 'linear-gradient(to bottom, rgba(5,8,22,0.15) 0%, transparent 20%, transparent 80%, rgba(5,8,22,0.3) 100%)',
+                    boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1)',
+                  }}
+                />
+                {/* Corner accents */}
+                <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-cyan-400/60 rounded-tl pointer-events-none" />
+                <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-cyan-400/60 rounded-tr pointer-events-none" />
+                <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-cyan-400/60 rounded-bl pointer-events-none" />
+                <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-cyan-400/60 rounded-br pointer-events-none" />
               </div>
 
               {/* Monospaced Address */}
