@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion';
 import { Map, Phone } from 'lucide-react';
+import { useState } from 'react';
 import RippleButton from './RippleButton';
 
 export default function LocationSection() {
+  const [mapLoaded, setMapLoaded] = useState(false);
   return (
     <section className="py-24 w-full relative">
       
@@ -47,16 +49,37 @@ export default function LocationSection() {
               
               {/* Google Maps Embed */}
               <div className="w-full h-[240px] mb-8 relative rounded-2xl overflow-hidden border border-white/10"
-                style={{ boxShadow: '0 0 0 1px rgba(41,121,255,0.2), 0 8px 32px rgba(0,0,0,0.5)' }}>
+                style={{ background: '#0d1b2a', boxShadow: '0 0 0 1px rgba(41,121,255,0.2), 0 8px 32px rgba(0,0,0,0.5)' }}>
+                {/* Loading placeholder — hides the white/blue flash while iframe loads */}
+                {!mapLoaded && (
+                  <div className="absolute inset-0 flex items-center justify-center z-10"
+                    style={{ background: '#0d1b2a' }}>
+                    <div className="flex flex-col items-center gap-3">
+                      <motion.div
+                        className="w-8 h-8 rounded-full border-2 border-cyan-400/40 border-t-cyan-400"
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                      />
+                      <span className="text-[10px] text-cyan-400/50 tracking-widest uppercase font-mono">Locating</span>
+                    </div>
+                  </div>
+                )}
                 <iframe
                   title="CARE ONE Pharmacy Location"
                   src="https://maps.google.com/maps?q=Paramount+GolfMart+Surajpur+Greater+Noida+Uttar+Pradesh&output=embed&hl=en&z=16"
                   width="100%"
                   height="100%"
-                  style={{ border: 0, display: 'block' }}
+                  style={{
+                    border: 0,
+                    display: 'block',
+                    opacity: mapLoaded ? 1 : 0,
+                    transition: 'opacity 0.6s ease',
+                    filter: 'saturate(1.6) contrast(1.05) brightness(1.05) hue-rotate(5deg)',
+                  }}
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
+                  onLoad={() => setMapLoaded(true)}
                 />
                 {/* Holographic overlay frame */}
                 <div className="absolute inset-0 pointer-events-none rounded-2xl"

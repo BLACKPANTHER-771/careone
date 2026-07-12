@@ -32,7 +32,7 @@ export default function ContactSection() {
           </div>
 
           <a href="tel:8826775758" className="relative z-10 block cursor-pointer group">
-            <h2 className="text-5xl md:text-8xl lg:text-[7rem] font-display font-bold text-white tracking-tighter drop-shadow-[0_0_30px_rgba(0,229,255,0.4)] flex overflow-hidden py-4">
+            <h2 className="text-4xl md:text-6xl lg:text-[4.5rem] font-display font-bold text-white tracking-tighter drop-shadow-[0_0_30px_rgba(0,229,255,0.4)] flex overflow-hidden py-4">
               {numberStr.split('').map((char, index) => (
                 <motion.span
                   key={index}
