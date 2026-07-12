@@ -1,0 +1,490 @@
+ROLE
+
+You are the Creative Director of the world's best UI/UX studio.
+
+You are designing the digital identity of a pharmacy called CARE ONE.
+
+This is NOT a pharmacy website.
+
+This is a premium brand experience.
+
+The final result should feel worthy of Apple Design Awards and Awwwards Site of the Day.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PRIMARY GOAL
+
+When someone closes the page after only five seconds, they must remember one thing:
+
+CARE ONE.
+
+NOT medicines.
+
+NOT discounts.
+
+The BRAND.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TARGET AUDIENCE
+
+Primary age:
+
+40–60 years
+
+Therefore:
+
+• Very easy to understand
+
+• Very large typography
+
+• Large touch targets
+
+• Extremely high readability
+
+• Premium spacing
+
+• No clutter
+
+• No tiny icons
+
+• No dashboard appearance
+
+• Mobile-first
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DESIGN PERSONALITY
+
+Elegant
+
+Trustworthy
+
+Fast
+
+Premium
+
+Emotional
+
+Modern
+
+Minimal
+
+Never childish
+
+Never gaming
+
+Never cyberpunk
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+VISUAL STYLE
+
+Think:
+
+Apple Vision Pro
+
+Nothing Phone
+
+Stripe
+
+Linear
+
+Arc Browser
+
+Tesla
+
+Apple.com
+
+Huge breathing space.
+
+Massive negative space.
+
+Large typography.
+
+Beautiful lighting.
+
+Subtle depth.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+BACKGROUND
+
+Deep midnight navy (#050816).
+
+Soft animated gradients.
+
+Very subtle volumetric light.
+
+Tiny floating particles.
+
+Almost invisible.
+
+Do NOT use stars.
+
+Do NOT use galaxy themes.
+
+Do NOT use busy backgrounds.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+COLOR PALETTE
+
+Primary
+
+White
+
+Electric Blue
+
+Accent
+
+Luxury Gold
+
+CTA
+
+Bright Cyan
+
+Emergency
+
+Neon Coral
+
+Success
+
+Fresh Emerald
+
+Icons
+
+Use vibrant accent colors that contrast naturally but remain elegant.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+INTRO ANIMATION
+
+Maximum duration:
+
+3 seconds.
+
+Never longer.
+
+Timeline
+
+0.0 sec
+
+Dark screen.
+
+One glowing blue particle appears.
+
+0.4 sec
+
+More particles arrive.
+
+0.8 sec
+
+Particles begin orbiting.
+
+1.2 sec
+
+Elegant circular energy field forms.
+
+1.8 sec
+
+Energy transforms into the letters
+
+C
+
+↓
+
+CA
+
+↓
+
+CARE
+
+↓
+
+CARE ONE
+
+2.5 sec
+
+Golden pulse expands.
+
+3.0 sec
+
+Entire website fades in.
+
+Animation plays once only.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+HERO SECTION
+
+Massive CARE ONE logo.
+
+Tagline
+
+Trusted Care.
+One Destination.
+
+Below:
+
+Two premium glass buttons.
+
+CALL NOW
+
+GET DIRECTIONS
+
+Buttons should feel physical with depth.
+
+Ripple animation on tap.
+
+Below:
+
+Live status
+
+🟢 OPEN NOW
+
+8:00 AM – 11:00 PM
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+THE PULSE OF CARE
+
+A thin elegant glowing pulse line begins below the logo.
+
+This pulse continues through the ENTIRE website.
+
+Every section connects visually to it.
+
+This pulse is the identity of CARE ONE.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TRUST SECTION
+
+Instead of generic cards...
+
+Create premium floating glass tiles.
+
+Large colorful illustration.
+
+Large text.
+
+Minimal wording.
+
+20% OFF Medicines
+
+FREE Sunday BP Check
+Worth ₹20
+
+FREE Sunday Sugar Check
+Worth ₹30
+
+FREE Home Delivery
+
+Open Daily
+8 AM–11 PM
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SERVICES
+
+Four premium glass flip cards.
+
+Front
+
+Large premium 3D illustration.
+
+Medicine cabinet.
+
+Luxury cosmetic bottle.
+
+Supplement container.
+
+Medical injection kit.
+
+Large title.
+
+Bottom text:
+
+TURN FOR MORE INFO
+
+Tap animation
+
+Card flips naturally.
+
+Back
+
+Short information.
+
+Never overload text.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SPECIAL OFFER
+
+Large floating luxury crystal.
+
+20%
+
+OFF
+
+ON MEDICINES
+
+Soft golden particles orbit slowly.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+HEALTH CHECK
+
+Premium elegant section.
+
+BP
+
+Large modern heart illustration.
+
+FREE BP CHECK
+
+Worth ₹20
+
+Every Sunday
+
+Sugar
+
+Large modern blood drop illustration.
+
+FREE SUGAR CHECK
+
+Worth ₹30
+
+Every Sunday
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+HOME DELIVERY
+
+Create a premium visual.
+
+Pharmacy
+
+↓
+
+Animated pulse
+
+↓
+
+House
+
+No scooter.
+
+No truck.
+
+Use light itself as the delivery metaphor.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+LOCATION
+
+Premium navigation panel.
+
+Display complete address:
+
+CARE ONE PHARMACY
+
+Shop No. PL-012
+
+BGH-A
+
+Site-C
+
+Paramount GolfMart
+
+Below ICICI Bank
+
+Opposite Sector Zeta
+
+Surajpur
+
+Greater Noida
+
+U.P. 201306
+
+Buttons
+
+Open Google Maps
+
+Call Store
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CONTACT
+
+Large premium call button.
+
+Phone
+
+8826775758
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FOOTER
+
+The pulse reconnects into the CARE ONE logo.
+
+Display
+
+CARE ONE
+
+Trusted Care.
+One Destination.
+
+Everything ends where it began.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ANIMATIONS
+
+Smooth.
+
+Premium.
+
+Never excessive.
+
+Scroll reveals.
+
+Parallax.
+
+Gyroscope.
+
+Ripple buttons.
+
+Flip cards.
+
+Soft light transitions.
+
+No bouncing.
+
+No flashy neon overload.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+IMPORTANT RULES
+
+Do NOT create dashboard UI.
+
+Do NOT create admin panels.
+
+Do NOT use tiny icons.
+
+Do NOT overuse neon.
+
+Do NOT create generic medical templates.
+
+Do NOT use stock illustrations.
+
+Use premium cinematic 3D illustrations.
+
+Everything should feel like one continuous luxury experience.
+
+The website must immediately communicate trust while remaining unforgettable.
+
+The entire page should feel handcrafted by a world-class design studio.

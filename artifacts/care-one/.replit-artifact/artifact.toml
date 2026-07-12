@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "CARE ONE Pharmacy"
+version = "1.0.0"
+id = "artifacts/care-one"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23662
+
+[services.development]
+run = "pnpm --filter @workspace/care-one run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/care-one", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/care-one/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23662"
+BASE_PATH = "/"
