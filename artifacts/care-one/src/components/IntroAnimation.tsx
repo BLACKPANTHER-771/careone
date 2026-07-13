@@ -1,334 +1,325 @@
 /**
- * IntroAnimation — cinematic 3-second opening sequence.
- * Plays once per browser session (sessionStorage gated).
+ * IntroAnimation — cinematic 3-second particle-assembly opening.
+ * Session key: care_one_intro_v2 (bumped to reset stale keys).
  *
- * Timeline
- *  0.00 – 0.30s  Dark void
- *  0.30 – 0.70s  Origin particle pulses to life
- *  0.70 – 1.20s  Particle energy field explodes outward
- *  1.20 – 1.40s  "C" crystallises from converging particles
- *  1.40 – 1.60s  "A" crystallises
- *  1.60 – 1.80s  "R" crystallises
- *  1.80 – 2.00s  "E" crystallises → full "CARE"
- *  2.00 – 2.40s  " ONE" assembles in gold/cyan
- *  2.40 – 3.10s  Golden shockwave sweeps entire screen
- *  3.10s         onComplete fires; component fades out
+ * Phase timeline
+ *  0      Dark void
+ *  1 0.3s Single blue origin particle pulses
+ *  2 0.7s 64 particles explode outward — energy field
+ *  3 1.2s "C" crystallises (particles converge, letter blurs in)
+ *  4 1.45s "A" crystallises
+ *  5 1.70s "R" crystallises
+ *  6 1.95s "E" crystallises → full CARE
+ *  7 2.25s "ONE" assembles in gold-cyan
+ *  8 2.65s Golden shockwave detonates across entire screen
+ *  —  3.4s fade-out → onComplete
  */
 
-import { motion, AnimatePresence, useAnimation } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 
-// ─── Pre-computed constants (zero Math.random() in render) ───────────────────
+// ─── Pre-computed particle data (NO Math.random inside render) ────────────────
 
-// Field particles — burst from origin then orbit
-const FIELD_PARTICLES = Array.from({ length: 72 }, (_, i) => {
-  const angle = (i / 72) * Math.PI * 2;
-  const r = 70 + (i * 23) % 140;
+const FIELD = Array.from({ length: 64 }, (_, i) => {
+  const a = (i / 64) * Math.PI * 2;
+  const r = 80 + (i * 29) % 130;
   return {
-    id: i,
-    tx: Math.cos(angle) * r,
-    ty: Math.sin(angle) * r,
-    color:
-      i % 7 === 0 ? '#FFD700'
-      : i % 3 === 0 ? '#00E5FF'
-      : '#3D8EFF',
-    size: i % 5 === 0 ? 3 : i % 3 === 0 ? 2.5 : 1.8,
-    delay: (i % 12) * 0.025,
-    orbitDur: 6 + (i % 6),
-    pulseDelay: (i % 8) * 0.15,
+    id:    i,
+    tx:    Math.cos(a) * r,
+    ty:    Math.sin(a) * r,
+    color: i % 7 === 0 ? '#FFD700' : i % 3 === 0 ? '#00E5FF' : '#4A9EFF',
+    size:  i % 5 === 0 ? 3 : 2,
+    delay: (i % 10) * 0.022,
+    pdel:  (i % 6) * 0.18,
   };
 });
 
-// Gathering particles per letter — converge toward each letter's center
-// offsets relative to text container center (px, ~80px font)
-const LETTER_CENTERS = [
-  { ch: 'C', x: -244 },
-  { ch: 'A', x: -170 },
-  { ch: 'R', x:  -94 },
-  { ch: 'E', x:  -18 },
-  { ch: 'O', x:   72 },
-  { ch: 'N', x:  152 },
-  { ch: 'E', x:  228 },
+// Letter horizontal centres (px from text-group centre, ~86px font)
+const LETTERS = [
+  { ch: 'C', x: -252, phase: 3, gold: false },
+  { ch: 'A', x: -175, phase: 4, gold: false },
+  { ch: 'R', x:  -96, phase: 5, gold: false },
+  { ch: 'E', x:  -17, phase: 6, gold: false },
+  { ch: 'O', x:   72, phase: 7, gold: true  },
+  { ch: 'N', x:  154, phase: 7, gold: true  },
+  { ch: 'E', x:  232, phase: 7, gold: true  },
 ];
 
-// 10 gathering particles per letter, with pre-computed start offsets
-const GATHERERS = LETTER_CENTERS.map(({ ch, x }) =>
-  Array.from({ length: 10 }, (_, j) => {
-    const angle = (j / 10) * Math.PI * 2 + j * 0.4;
-    const dist = 80 + (j * 31) % 100;
+// 8 gathering dots per letter, scattered around that letter's centre
+const GATHERERS = LETTERS.flatMap(({ ch, x, phase, gold }) =>
+  Array.from({ length: 8 }, (_, j) => {
+    const a = (j / 8) * Math.PI * 2 + j * 0.5;
+    const d = 70 + (j * 37) % 90;
     return {
-      ch,
-      cx: x,
-      sx: Math.cos(angle) * dist,
-      sy: Math.sin(angle) * dist,
-      color: (ch === 'O' || ch === 'N') ? '#FFD700' : '#00E5FF',
-      delay: j * 0.04,
-      size: j % 3 === 0 ? 3 : 2,
+      key:   `${ch}-${x}-${j}`,
+      cx:    x,
+      sx:    Math.cos(a) * d,
+      sy:    Math.sin(a) * d,
+      color: gold ? '#FFD700' : '#00E5FF',
+      phase,
+      delay: j * 0.035,
+      size:  j % 3 === 0 ? 3 : 2,
     };
   })
 );
 
-// Letter phase index: when does each letter start appearing?
-const LETTER_PHASE: Record<string, number> = {
-  // CARE group — phases 3-6
-  C: 3, A: 4, R: 5, E: 6,
-  // ONE group — phase 7
-  O: 7, N: 7,
-};
-// The second "E" (in ONE) uses phase 7 also — we handle by letter index
-
-// Phase colours
-const isGoldGroup = (ch: string, idx: number) =>
-  ch === 'O' || ch === 'N' || (ch === 'E' && idx === 6);
-
 // ─── Component ────────────────────────────────────────────────────────────────
 
-interface IntroAnimationProps {
-  onComplete: () => void;
-}
+interface Props { onComplete: () => void; }
 
-export default function IntroAnimation({ onComplete }: IntroAnimationProps) {
-  const [phase, setPhase] = useState(0);
-  const [visible, setVisible] = useState(true);
-  const onCompleteRef = useRef(onComplete);
-  onCompleteRef.current = onComplete;
+export default function IntroAnimation({ onComplete }: Props) {
+  const [phase, setPhase]     = useState(0);
+  const [exiting, setExiting] = useState(false);
+  const cbRef = useRef(onComplete);
+  cbRef.current = onComplete;
 
   useEffect(() => {
-    const timers = [
-      setTimeout(() => setPhase(1),  300),   // origin particle
-      setTimeout(() => setPhase(2),  700),   // energy field
-      setTimeout(() => setPhase(3), 1200),   // C
-      setTimeout(() => setPhase(4), 1400),   // A
-      setTimeout(() => setPhase(5), 1600),   // R
-      setTimeout(() => setPhase(6), 1800),   // E  → CARE complete
-      setTimeout(() => setPhase(7), 2050),   // ONE
-      setTimeout(() => setPhase(8), 2500),   // golden pulse
-      setTimeout(() => {
-        setVisible(false);
-        setTimeout(() => onCompleteRef.current(), 600);
-      }, 3200),
+    const T = [
+      setTimeout(() => setPhase(1),  300),
+      setTimeout(() => setPhase(2),  700),
+      setTimeout(() => setPhase(3), 1200),
+      setTimeout(() => setPhase(4), 1450),
+      setTimeout(() => setPhase(5), 1700),
+      setTimeout(() => setPhase(6), 1950),
+      setTimeout(() => setPhase(7), 2250),
+      setTimeout(() => setPhase(8), 2650),
+      setTimeout(() => setExiting(true), 3400),
+      setTimeout(() => cbRef.current(),  3950),
     ];
-    return () => timers.forEach(clearTimeout);
+    return () => T.forEach(clearTimeout);
   }, []);
 
   return (
     <AnimatePresence>
-      {visible && (
+      {!exiting && (
         <motion.div
-          key="intro"
-          className="fixed inset-0 z-[999] flex items-center justify-center bg-[#050816] overflow-hidden"
-          initial={{ opacity: 1 }}
+          key="intro-overlay"
+          className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden"
+          style={{ background: '#050816' }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.6, ease: 'easeInOut' }}
+          transition={{ duration: 0.55, ease: 'easeInOut' }}
         >
 
-          {/* ── Radial atmosphere glow ────────────────────────────────── */}
+          {/* ── Atmosphere bloom ────────────────────────────────────── */}
           <motion.div
             className="absolute inset-0 pointer-events-none"
-            initial={{ opacity: 0 }}
             animate={{ opacity: phase >= 2 ? 1 : 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.9 }}
             style={{
-              background: 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(41,121,255,0.18) 0%, rgba(5,8,22,0) 80%)',
+              background:
+                'radial-gradient(ellipse 55% 45% at 50% 50%, rgba(41,121,255,0.20) 0%, transparent 75%)',
             }}
           />
 
-          {/* ── Field particles (phase 2+) ─────────────────────────────── */}
+          {/* ── Field particles (phase 2 → 7) ───────────────────────── */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            {FIELD_PARTICLES.map((p) => (
+            {FIELD.map((p) => (
               <motion.div
-                key={`fp-${p.id}`}
+                key={`f${p.id}`}
                 className="absolute rounded-full"
                 style={{
-                  width: p.size, height: p.size,
+                  width:  p.size,
+                  height: p.size,
                   background: p.color,
                   boxShadow: `0 0 ${p.size * 3}px ${p.color}`,
                 }}
                 initial={{ x: 0, y: 0, opacity: 0, scale: 0 }}
-                animate={phase >= 2 ? {
-                  x: phase >= 3 ? p.tx * 0.6 : p.tx,
-                  y: phase >= 3 ? p.ty * 0.6 : p.ty,
-                  opacity: phase >= 8 ? 0 : [0, 1, 0.6, 0.9],
-                  scale: 1,
-                } : { x: 0, y: 0, opacity: 0, scale: 0 }}
+                animate={
+                  phase >= 2
+                    ? {
+                        x:       phase >= 3 ? p.tx * 0.55 : p.tx,
+                        y:       phase >= 3 ? p.ty * 0.55 : p.ty,
+                        opacity: phase >= 8 ? 0 : 1,
+                        scale:   1,
+                      }
+                    : { x: 0, y: 0, opacity: 0, scale: 0 }
+                }
                 transition={{
-                  duration: 0.55,
-                  delay: p.delay,
-                  ease: 'easeOut',
-                  opacity: { duration: 0.4 + p.pulseDelay * 0.2 },
+                  duration: 0.5,
+                  delay:    p.delay,
+                  ease:     'easeOut',
                 }}
               />
             ))}
           </div>
 
-          {/* ── Gathering particles (phase 3-7) — converge to each letter ── */}
-          {phase >= 3 && phase < 8 && (
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              {GATHERERS.flatMap((group, li) =>
-                group.map((g, gi) => {
-                  const letterPhase = isGoldGroup(g.ch, li * 10 + gi)
-                    ? 7 : LETTER_PHASE[g.ch] ?? 3;
-                  if (phase < letterPhase) return null;
-                  return (
-                    <motion.div
-                      key={`g-${li}-${gi}`}
-                      className="absolute rounded-full"
-                      style={{ width: g.size, height: g.size, background: g.color, boxShadow: `0 0 6px ${g.color}` }}
-                      initial={{ x: g.cx + g.sx, y: g.sy, opacity: 0 }}
-                      animate={{ x: g.cx, y: 0, opacity: [0, 1, 0] }}
-                      transition={{ duration: 0.38, delay: g.delay, ease: 'easeIn' }}
-                    />
-                  );
-                })
-              )}
-            </div>
-          )}
+          {/* ── Gathering dots → each letter's centre ───────────────── */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            {GATHERERS.map((g) =>
+              phase >= g.phase ? (
+                <motion.div
+                  key={g.key}
+                  className="absolute rounded-full"
+                  style={{
+                    width:  g.size,
+                    height: g.size,
+                    background: g.color,
+                    boxShadow: `0 0 5px ${g.color}`,
+                  }}
+                  initial={{ x: g.cx + g.sx, y: g.sy, opacity: 0 }}
+                  animate={{ x: g.cx, y: 0, opacity: [0, 1, 0] }}
+                  transition={{ duration: 0.35, delay: g.delay, ease: 'easeIn' }}
+                />
+              ) : null
+            )}
+          </div>
 
-          {/* ── Origin particle (phase 1-2) ───────────────────────────── */}
+          {/* ── Origin particle (phase 1 → 2) ───────────────────────── */}
           <AnimatePresence>
             {phase >= 1 && phase < 3 && (
               <motion.div
                 key="origin"
                 className="absolute rounded-full"
+                style={{
+                  width: 10, height: 10,
+                  background: '#4A9EFF',
+                  boxShadow: '0 0 30px 12px rgba(41,121,255,0.8)',
+                }}
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{
-                  scale: [0, 1.8, 1.2, 1.6, 1],
+                  scale:   [0, 2, 1.3, 1.7, 1],
                   opacity: 1,
-                  boxShadow: [
-                    '0 0 20px 8px rgba(41,121,255,0.6)',
-                    '0 0 50px 24px rgba(41,121,255,0.9)',
-                    '0 0 30px 14px rgba(41,121,255,0.7)',
-                  ],
                 }}
                 exit={{ scale: 0, opacity: 0 }}
-                transition={{ duration: 0.5, ease: 'easeOut' }}
-                style={{ width: 10, height: 10, background: '#3D8EFF' }}
+                transition={{ duration: 0.45, ease: 'easeOut' }}
               />
             )}
           </AnimatePresence>
 
-          {/* ── CARE ONE text assembly ────────────────────────────────── */}
-          <div className="relative flex items-center gap-0 select-none">
+          {/* ── CARE ONE letter assembly ─────────────────────────────── */}
+          <div className="relative flex items-center select-none">
             {/* C A R E */}
-            {(['C', 'A', 'R', 'E'] as const).map((ch, i) => {
-              const showPhase = i + 3; // C=3, A=4, R=5, E=6
-              return (
-                <AnimatePresence key={`care-${ch}-${i}`}>
-                  {phase >= showPhase && (
-                    <motion.span
-                      key={`care-letter-${ch}-${i}`}
-                      className="font-display font-bold text-white"
-                      style={{
-                        fontSize: 'clamp(48px, 9vw, 86px)',
-                        letterSpacing: '-0.01em',
-                        lineHeight: 1,
-                        display: 'inline-block',
-                        textShadow: '0 0 30px rgba(41,121,255,0.8), 0 0 60px rgba(41,121,255,0.4)',
-                        willChange: 'transform, opacity, filter',
-                      }}
-                      initial={{ opacity: 0, scale: 1.6, filter: 'blur(18px)' }}
-                      animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-                      transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-                    >
-                      {ch}
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-              );
-            })}
-
-            {/* Spacer */}
-            {phase >= 7 && <span style={{ display: 'inline-block', width: 'clamp(10px,2vw,20px)' }} />}
-
-            {/* O N E */}
-            {(['O', 'N', 'E'] as const).map((ch, i) => (
-              <AnimatePresence key={`one-${ch}-${i}`}>
-                {phase >= 7 && (
+            {LETTERS.filter(l => !l.gold).map((l, i) => (
+              <AnimatePresence key={`care-${l.ch}-${i}`}>
+                {phase >= l.phase && (
                   <motion.span
-                    key={`one-letter-${ch}-${i}`}
-                    className="font-display font-bold"
+                    className="font-display font-bold text-white"
                     style={{
-                      fontSize: 'clamp(48px, 9vw, 86px)',
-                      letterSpacing: '-0.01em',
+                      fontSize: 'clamp(52px, 10vw, 90px)',
+                      letterSpacing: '-0.02em',
                       lineHeight: 1,
                       display: 'inline-block',
-                      background: 'linear-gradient(135deg, #FFD700 0%, #00E5FF 100%)',
+                      textShadow:
+                        '0 0 25px rgba(41,121,255,0.9), 0 0 55px rgba(41,121,255,0.4)',
+                    }}
+                    initial={{ opacity: 0, scale: 1.8, filter: 'blur(22px)' }}
+                    animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                    transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    {l.ch}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            ))}
+
+            {/* Gap before ONE */}
+            <span style={{ display: 'inline-block', width: phase >= 7 ? 'clamp(12px,2vw,22px)' : 0 }} />
+
+            {/* O N E */}
+            {LETTERS.filter(l => l.gold).map((l, i) => (
+              <AnimatePresence key={`one-${l.ch}-${i}`}>
+                {phase >= 7 && (
+                  <motion.span
+                    className="font-display font-bold"
+                    style={{
+                      fontSize: 'clamp(52px, 10vw, 90px)',
+                      letterSpacing: '-0.02em',
+                      lineHeight: 1,
+                      display: 'inline-block',
+                      background:
+                        'linear-gradient(135deg, #FFD700 0%, #00E5FF 100%)',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
                       backgroundClip: 'text',
-                      filter: 'drop-shadow(0 0 20px rgba(255,215,0,0.6))',
-                      willChange: 'transform, opacity',
+                      filter:
+                        'drop-shadow(0 0 18px rgba(255,215,0,0.7))',
                     }}
-                    initial={{ opacity: 0, scale: 1.8, filter: 'blur(22px) drop-shadow(0 0 20px rgba(255,215,0,0.6))' }}
-                    animate={{ opacity: 1, scale: 1, filter: 'blur(0px) drop-shadow(0 0 20px rgba(255,215,0,0.6))' }}
-                    transition={{ duration: 0.32, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                    initial={{ opacity: 0, scale: 1.9, filter: 'blur(24px) drop-shadow(0 0 18px rgba(255,215,0,0.7))' }}
+                    animate={{ opacity: 1, scale: 1, filter: 'blur(0px) drop-shadow(0 0 18px rgba(255,215,0,0.7))' }}
+                    transition={{
+                      duration: 0.28,
+                      delay: i * 0.06,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
                   >
-                    {ch}
+                    {l.ch}
                   </motion.span>
                 )}
               </AnimatePresence>
             ))}
           </div>
 
-          {/* ── Tagline (appears with ONE) ────────────────────────────── */}
+          {/* ── Tagline beneath CARE ONE ─────────────────────────────── */}
           <AnimatePresence>
             {phase >= 7 && (
               <motion.p
                 key="tagline"
-                className="absolute font-display text-white/40 tracking-[0.3em] uppercase"
-                style={{ bottom: 'calc(50% - 80px)', fontSize: 'clamp(10px, 1.2vw, 13px)' }}
-                initial={{ opacity: 0, y: 8 }}
+                className="absolute font-display text-white/35 tracking-[0.35em] uppercase"
+                style={{
+                  top: 'calc(50% + clamp(40px, 7vw, 70px))',
+                  fontSize: 'clamp(9px, 1.1vw, 12px)',
+                }}
+                initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.25 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
               >
                 Your Health. Our Mission.
               </motion.p>
             )}
           </AnimatePresence>
 
-          {/* ── Golden shockwave (phase 8) ────────────────────────────── */}
-          <AnimatePresence>
-            {phase >= 8 && (
-              <>
-                {/* Inner hard flash */}
-                <motion.div
-                  key="flash-inner"
-                  className="absolute rounded-full pointer-events-none"
-                  style={{ width: 4, height: 4, background: '#FFD700' }}
-                  initial={{ scale: 1, opacity: 1 }}
-                  animate={{ scale: 600, opacity: 0 }}
-                  transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-                />
-                {/* Outer gold ring */}
-                <motion.div
-                  key="flash-ring"
-                  className="absolute rounded-full pointer-events-none"
-                  style={{
-                    width: 60, height: 60,
-                    border: '3px solid rgba(255,215,0,0.9)',
-                    boxShadow: '0 0 40px 10px rgba(255,215,0,0.5), inset 0 0 20px rgba(255,215,0,0.3)',
-                  }}
-                  initial={{ scale: 1, opacity: 1 }}
-                  animate={{ scale: 50, opacity: 0 }}
-                  transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
-                />
-                {/* Screen-wide golden overlay */}
-                <motion.div
-                  key="flash-overlay"
-                  className="absolute inset-0 pointer-events-none"
-                  style={{ background: 'radial-gradient(circle, rgba(255,215,0,0.35) 0%, rgba(41,121,255,0.2) 50%, rgba(5,8,22,0) 100%)' }}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: [0, 1, 0] }}
-                  transition={{ duration: 0.85, times: [0, 0.15, 1] }}
-                />
-              </>
-            )}
-          </AnimatePresence>
+          {/* ── Golden shockwave (phase 8) ───────────────────────────── */}
+          {phase >= 8 && (
+            <>
+              {/* Hard inner flash */}
+              <motion.div
+                key="flash-core"
+                className="absolute rounded-full pointer-events-none"
+                style={{
+                  width: 6, height: 6,
+                  background: '#FFD700',
+                  boxShadow: '0 0 30px 15px rgba(255,215,0,0.9)',
+                }}
+                initial={{ scale: 1, opacity: 1 }}
+                animate={{ scale: 700, opacity: 0 }}
+                transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
+              />
+              {/* Expanding ring */}
+              <motion.div
+                key="flash-ring"
+                className="absolute rounded-full pointer-events-none"
+                style={{
+                  width: 50, height: 50,
+                  border: '3px solid rgba(255,215,0,0.95)',
+                  boxShadow:
+                    '0 0 40px 10px rgba(255,215,0,0.55), inset 0 0 20px rgba(255,215,0,0.3)',
+                }}
+                initial={{ scale: 1, opacity: 1 }}
+                animate={{ scale: 55, opacity: 0 }}
+                transition={{ duration: 0.95, ease: [0.22, 1, 0.36, 1], delay: 0.04 }}
+              />
+              {/* Screen radial overlay */}
+              <motion.div
+                key="flash-bg"
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background:
+                    'radial-gradient(circle, rgba(255,215,0,0.38) 0%, rgba(41,121,255,0.22) 45%, transparent 80%)',
+                }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 1, 0] }}
+                transition={{ duration: 0.9, times: [0, 0.12, 1] }}
+              />
+            </>
+          )}
 
-          {/* ── Scan line (subtle film-noir CRT feel) ─────────────────── */}
+          {/* ── Subtle CRT scan line ─────────────────────────────────── */}
           <motion.div
-            className="absolute left-0 right-0 h-[1px] pointer-events-none"
-            style={{ background: 'linear-gradient(to right, transparent, rgba(0,229,255,0.15), transparent)' }}
+            className="absolute left-0 right-0 h-px pointer-events-none"
+            style={{
+              background:
+                'linear-gradient(to right, transparent, rgba(0,229,255,0.12), transparent)',
+            }}
             animate={{ top: ['0%', '100%'] }}
             transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
           />

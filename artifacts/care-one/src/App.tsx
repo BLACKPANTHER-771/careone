@@ -30,7 +30,7 @@ function MainLayout() {
   );
 }
 
-const SESSION_KEY = 'care_one_intro_seen';
+const SESSION_KEY = 'care_one_intro_v2';
 
 export default function App() {
   const [introComplete, setIntroComplete] = useState(
