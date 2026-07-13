@@ -12,10 +12,12 @@ import Footer from './components/Footer';
 import PulseIdentity from './components/PulseIdentity';
 import CareDock from './components/CareDock';
 import DomeEnvironment from './components/DomeEnvironment';
+import WorldLayer from './components/WorldLayer';
 
 function MainLayout() {
   return (
     <div className="relative min-h-screen pb-28 md:pb-0 z-10 selection:bg-cyan-500/30">
+      <WorldLayer />
       <HeroSection />
       <TrustSection />
       <ServicesSection />
