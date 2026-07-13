@@ -579,7 +579,7 @@ function HoursIllustration() {
 const TILES = [
   {
     headline: '20% OFF',
-    detail:   'On All Medicines',
+    detail:   'On Medicines',
     sub:      'Every purchase, every day',
     accent:   '#FFB800',
     glow:     'rgba(255,180,0,0.22)',
