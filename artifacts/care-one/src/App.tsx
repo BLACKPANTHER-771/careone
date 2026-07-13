@@ -30,12 +30,21 @@ function MainLayout() {
   );
 }
 
+const SESSION_KEY = 'care_one_intro_seen';
+
 export default function App() {
-  const [introComplete, setIntroComplete] = useState(false);
+  const [introComplete, setIntroComplete] = useState(
+    () => sessionStorage.getItem(SESSION_KEY) === '1'
+  );
+
+  const handleIntroComplete = () => {
+    sessionStorage.setItem(SESSION_KEY, '1');
+    setIntroComplete(true);
+  };
 
   return (
     <>
-      {!introComplete && <IntroAnimation onComplete={() => setIntroComplete(true)} />}
+      {!introComplete && <IntroAnimation onComplete={handleIntroComplete} />}
       {introComplete && (
         <>
           <DomeEnvironment />
