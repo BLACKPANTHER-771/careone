@@ -3,6 +3,40 @@ import { useRef, useState, useEffect } from 'react';
 
 // ─── Pre-computed constants ────────────────────────────────────────────────────
 
+// Crystal orbital particles — 3 rings, 4 particles each, pre-computed keyframes
+// Ring 0: nearly horizontal  rx=66 ry=18
+// Ring 1: mid-tilt           rx=56 ry=28
+// Ring 2: steep              rx=44 ry=36
+const CRYSTAL_RINGS = [
+  { rx: 66, ry: 18, color: '#FFE566', size: 3.5, particles: 4, durBase: 5.2  },
+  { rx: 56, ry: 28, color: '#FFAA00', size: 2.8, particles: 4, durBase: 7.0  },
+  { rx: 44, ry: 36, color: '#FF8C00', size: 2.2, particles: 4, durBase: 9.5  },
+];
+
+const CRYSTAL_ORBITERS = CRYSTAL_RINGS.flatMap((ring, ri) =>
+  Array.from({ length: ring.particles }, (_, pi) => {
+    const phase = (pi / ring.particles) * Math.PI * 2;
+    // 5-point keyframe approximation of a full ellipse orbit
+    const steps = 5;
+    const xs = Array.from({ length: steps + 1 }, (_, s) => {
+      const a = phase + (s / steps) * Math.PI * 2;
+      return parseFloat((ring.rx * Math.cos(a)).toFixed(2));
+    });
+    const ys = Array.from({ length: steps + 1 }, (_, s) => {
+      const a = phase + (s / steps) * Math.PI * 2;
+      return parseFloat((ring.ry * Math.sin(a)).toFixed(2));
+    });
+    return {
+      xs, ys,
+      color: ring.color,
+      size:  ring.size,
+      dur:   ring.durBase + pi * 0.4,
+      delay: (ri * 0.9 + pi * 0.55),
+      glow:  ring.color,
+    };
+  })
+);
+
 // Background micro-particle positions per card (deterministic)
 const CARD_PARTICLES = Array.from({ length: 5 }, (_, ci) =>
   Array.from({ length: 8 }, (_, pi) => ({
@@ -25,97 +59,194 @@ const FLOAT = [
 
 // ─── Per-card illustration components ─────────────────────────────────────────
 
-function DiscountIllustration() {
+function EnergyCrystalIllustration() {
   return (
-    <svg viewBox="0 0 160 140" className="w-full h-full" overflow="visible">
+    <svg viewBox="0 0 160 148" className="w-full h-full" overflow="visible">
       <defs>
-        <radialGradient id="dg-burst" cx="50%" cy="50%" r="50%">
-          <stop offset="0%"   stopColor="rgba(255,200,0,0.35)" />
-          <stop offset="100%" stopColor="rgba(255,140,0,0)" />
+        {/* ── Cinematic face gradients (light source: top-left) ── */}
+        <linearGradient id="ec-table" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%"   stopColor="rgba(230,245,255,0.92)" />
+          <stop offset="55%"  stopColor="rgba(160,210,255,0.72)" />
+          <stop offset="100%" stopColor="rgba(100,170,255,0.50)" />
+        </linearGradient>
+        <linearGradient id="ec-leftcrown" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%"   stopColor="rgba(190,230,255,0.65)" />
+          <stop offset="100%" stopColor="rgba(100,170,255,0.42)" />
+        </linearGradient>
+        <linearGradient id="ec-rightcrown" x1="1" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stopColor="rgba(30,80,200,0.55)" />
+          <stop offset="100%" stopColor="rgba(10,30,130,0.75)" />
+        </linearGradient>
+        <linearGradient id="ec-strip" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stopColor="rgba(140,195,255,0.38)" />
+          <stop offset="100%" stopColor="rgba(40,80,200,0.45)" />
+        </linearGradient>
+        <linearGradient id="ec-lpav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%"   stopColor="rgba(90,150,255,0.50)" />
+          <stop offset="100%" stopColor="rgba(20,50,180,0.65)" />
+        </linearGradient>
+        <linearGradient id="ec-cpav" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stopColor="rgba(150,200,255,0.38)" />
+          <stop offset="100%" stopColor="rgba(60,120,240,0.55)" />
+        </linearGradient>
+        <linearGradient id="ec-rpav" x1="1" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stopColor="rgba(15,40,160,0.70)" />
+          <stop offset="100%" stopColor="rgba(5,10,80,0.85)" />
+        </linearGradient>
+        {/* Internal golden core glow */}
+        <radialGradient id="ec-core" cx="42%" cy="38%" r="55%">
+          <stop offset="0%"   stopColor="rgba(255,220,80,0.55)" />
+          <stop offset="45%"  stopColor="rgba(255,160,20,0.22)" />
+          <stop offset="100%" stopColor="rgba(200,100,0,0)"      />
         </radialGradient>
-        <linearGradient id="dg-pill1" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"  stopColor="#FFE066" />
-          <stop offset="50%" stopColor="#FFC200" />
-          <stop offset="100%" stopColor="#E08000" />
-        </linearGradient>
-        <linearGradient id="dg-pill2" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"  stopColor="#FF8FAB" />
-          <stop offset="100%" stopColor="#C9184A" />
-        </linearGradient>
-        <linearGradient id="dg-pill3" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"  stopColor="#80FFDB" />
-          <stop offset="100%" stopColor="#0096C7" />
-        </linearGradient>
-        <filter id="dg-glow">
-          <feGaussianBlur stdDeviation="3" result="blur"/>
-          <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+        {/* Outer ambient glow */}
+        <radialGradient id="ec-ambient" cx="50%" cy="45%" r="55%">
+          <stop offset="0%"   stopColor="rgba(100,160,255,0.18)" />
+          <stop offset="100%" stopColor="rgba(40,80,255,0)"      />
+        </radialGradient>
+        {/* Particle glow filter */}
+        <filter id="ec-pglow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="2.5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        {/* Edge specular filter */}
+        <filter id="ec-spec" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="1.5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
       </defs>
 
-      {/* Burst rays */}
-      {[0,30,60,90,120,150,180,210,240,270,300,330].map((deg, i) => (
-        <motion.line key={i}
-          x1="80" y1="70"
-          x2={80 + Math.cos(deg * Math.PI / 180) * 55}
-          y2={70 + Math.sin(deg * Math.PI / 180) * 55}
-          stroke="rgba(255,200,0,0.18)" strokeWidth="1.5" strokeLinecap="round"
-          animate={{ opacity: [0.2, 0.6, 0.2], scale: [0.9, 1.05, 0.9] }}
-          transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.1, ease: 'easeInOut' }}
-          style={{ transformOrigin: '80px 70px' }}
+      {/* ── Ambient halo behind crystal ────────────────────────────── */}
+      <ellipse cx="80" cy="72" rx="62" ry="48" fill="url(#ec-ambient)" />
+
+      {/* ── Crystal body — 7 faces, cinematic light from top-left ──── */}
+      {/*
+          Key vertices:
+          Table:    TL(52,20)  TR(108,20)  IR(100,52)  IL(60,52)
+          Girdle:   GL(22,70)              GR(138,70)
+          Strip:    IL(60,52)  IR(100,52)  IR2(100,62) IL2(60,62)
+          Culet:    BP(80,138)
+      */}
+
+      {/* Rotating wrapper — slow Y-axis spin via scaleX oscillation */}
+      <motion.g
+        animate={{ scaleX: [1, 0.91, 1, 1.06, 1], skewY: [0, 0.6, 0, -0.5, 0] }}
+        transition={{ duration: 11, repeat: Infinity, ease: 'easeInOut' }}
+        style={{ transformOrigin: '80px 79px' }}
+      >
+        {/* Face 1: Table — top flat, brightest */}
+        <polygon points="52,20 108,20 100,52 60,52" fill="url(#ec-table)" />
+
+        {/* Face 2: Left crown — light-facing, medium-bright */}
+        <polygon points="52,20 22,70 60,52" fill="url(#ec-leftcrown)" />
+
+        {/* Face 3: Right crown — shadow-facing, deep navy */}
+        <polygon points="108,20 138,70 100,52" fill="url(#ec-rightcrown)" />
+
+        {/* Face 4: Girdle strip */}
+        <polygon points="60,52 100,52 100,62 60,62" fill="url(#ec-strip)" />
+
+        {/* Face 5: Left pavilion */}
+        <polygon points="22,70 60,62 80,138" fill="url(#ec-lpav)" />
+
+        {/* Face 6: Centre pavilion — internal bounce light */}
+        <polygon points="60,62 100,62 80,138" fill="url(#ec-cpav)" />
+
+        {/* Face 7: Right pavilion — deepest shadow */}
+        <polygon points="138,70 80,138 100,62" fill="url(#ec-rpav)" />
+
+        {/* Internal golden core glow (sits above faces) */}
+        <ellipse cx="76" cy="62" rx="44" ry="34" fill="url(#ec-core)" />
+
+        {/* ── Face edge lines ─────────────────────────────────────── */}
+        {/* Outer silhouette */}
+        <polygon points="52,20 108,20 138,70 80,138 22,70"
+          fill="none" stroke="rgba(200,230,255,0.35)" strokeWidth="0.8" />
+        {/* Internal divider lines */}
+        <line x1="52" y1="20" x2="60" y2="52"  stroke="rgba(200,230,255,0.28)" strokeWidth="0.6" />
+        <line x1="108" y1="20" x2="100" y2="52" stroke="rgba(120,160,255,0.22)" strokeWidth="0.6" />
+        <line x1="60" y1="52" x2="22" y2="70"   stroke="rgba(200,230,255,0.22)" strokeWidth="0.5" />
+        <line x1="100" y1="52" x2="138" y2="70"  stroke="rgba(80,120,220,0.2)"  strokeWidth="0.5" />
+        <line x1="60" y1="62" x2="22" y2="70"   stroke="rgba(160,200,255,0.18)" strokeWidth="0.5" />
+        <line x1="100" y1="62" x2="138" y2="70"  stroke="rgba(60,90,200,0.18)"  strokeWidth="0.5" />
+        <line x1="60" y1="52" x2="100" y2="52"  stroke="rgba(200,230,255,0.22)" strokeWidth="0.5" />
+        <line x1="60" y1="62" x2="100" y2="62"  stroke="rgba(160,200,255,0.18)" strokeWidth="0.5" />
+        <line x1="60" y1="62" x2="80" y2="138"  stroke="rgba(120,170,255,0.15)" strokeWidth="0.5" />
+        <line x1="100" y1="62" x2="80" y2="138"  stroke="rgba(40,60,180,0.18)"  strokeWidth="0.5" />
+
+        {/* ── Specular highlight — top-left corner flash ──────────── */}
+        <motion.ellipse
+          cx="64" cy="30" rx="18" ry="10"
+          fill="rgba(255,255,255,0.55)"
+          style={{ filter: 'blur(6px)' }}
+          animate={{ opacity: [0.45, 0.75, 0.45], cx: [64, 60, 64], cy: [30, 28, 30] }}
+          transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
+        />
+
+        {/* ── Refraction lines inside crystal ─────────────────────── */}
+        <line x1="68" y1="28" x2="58" y2="58"
+          stroke="rgba(255,255,255,0.18)" strokeWidth="1.2" strokeLinecap="round" />
+        <line x1="82" y1="24" x2="74" y2="54"
+          stroke="rgba(255,255,255,0.12)" strokeWidth="0.8" strokeLinecap="round" />
+        <line x1="70" y1="60" x2="55" y2="90"
+          stroke="rgba(180,210,255,0.10)" strokeWidth="0.6" strokeLinecap="round" />
+
+        {/* ── TEXT inside the crystal ──────────────────────────────── */}
+        {/* Shadow layers for depth */}
+        <text x="81" y="58" textAnchor="middle" fontSize="28" fontWeight="900"
+          fontFamily="'Plus Jakarta Sans',sans-serif"
+          fill="rgba(80,40,0,0.5)" letterSpacing="-0.5">20%</text>
+        <text x="80.5" y="57.5" textAnchor="middle" fontSize="28" fontWeight="900"
+          fontFamily="'Plus Jakarta Sans',sans-serif"
+          fill="rgba(180,90,0,0.6)" letterSpacing="-0.5">20%</text>
+        {/* Glowing gold main text */}
+        <motion.text x="80" y="57" textAnchor="middle" fontSize="28" fontWeight="900"
+          fontFamily="'Plus Jakarta Sans',sans-serif"
+          fill="#FFE066"
+          filter="url(#ec-pglow)"
+          animate={{ opacity: [0.88, 1, 0.88] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+        >20%</motion.text>
+
+        {/* "OFF" sub-label */}
+        <text x="80" y="70" textAnchor="middle" fontSize="11" fontWeight="800"
+          fontFamily="'Plus Jakarta Sans',sans-serif"
+          fill="rgba(255,210,80,0.9)" letterSpacing="3">OFF</text>
+
+        {/* "ON MEDICINES" label */}
+        <text x="80" y="83" textAnchor="middle" fontSize="8.5" fontWeight="600"
+          fontFamily="'Plus Jakarta Sans',sans-serif"
+          fill="rgba(200,230,255,0.70)" letterSpacing="1.5">ON MEDICINES</text>
+      </motion.g>
+
+      {/* ── Golden orbital particles ─────────────────────────────── */}
+      {CRYSTAL_ORBITERS.map((p, i) => (
+        <motion.circle
+          key={`co-${i}`}
+          r={p.size}
+          fill={p.color}
+          filter="url(#ec-pglow)"
+          style={{ cx: 80, cy: 72 } as React.CSSProperties}
+          animate={{ x: p.xs, y: p.ys }}
+          transition={{
+            duration: p.dur,
+            repeat: Infinity,
+            ease: 'linear',
+            delay: p.delay,
+            times: [0, 0.25, 0.5, 0.75, 1],
+          }}
         />
       ))}
 
-      {/* Glow orb */}
-      <circle cx="80" cy="70" r="50" fill="url(#dg-burst)" />
-
-      {/* Floating pill capsules */}
-      {/* Pill A — gold, top-left */}
-      <motion.g animate={{ y: [0, -5, 0], rotate: [-12, -8, -12] }}
-        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-        style={{ transformOrigin: '38px 38px' }}>
-        <rect x="20" y="28" width="36" height="16" rx="8" fill="url(#dg-pill1)" filter="url(#dg-glow)" />
-        <line x1="38" y1="28" x2="38" y2="44" stroke="rgba(255,255,255,0.25)" strokeWidth="1" />
-        <ellipse cx="29" cy="36" rx="8" ry="6" fill="rgba(255,255,255,0.2)" />
-      </motion.g>
-
-      {/* Pill B — rose, top-right */}
-      <motion.g animate={{ y: [0, 5, 0], rotate: [15, 20, 15] }}
-        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-        style={{ transformOrigin: '122px 32px' }}>
-        <rect x="104" y="24" width="36" height="16" rx="8" fill="url(#dg-pill2)" filter="url(#dg-glow)" />
-        <line x1="122" y1="24" x2="122" y2="40" stroke="rgba(255,255,255,0.25)" strokeWidth="1" />
-        <ellipse cx="113" cy="32" rx="8" ry="6" fill="rgba(255,255,255,0.2)" />
-      </motion.g>
-
-      {/* Pill C — teal, bottom */}
-      <motion.g animate={{ y: [0, -4, 0], rotate: [-5, 0, -5] }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-        style={{ transformOrigin: '80px 112px' }}>
-        <rect x="56" y="104" width="48" height="18" rx="9" fill="url(#dg-pill3)" filter="url(#dg-glow)" />
-        <line x1="80" y1="104" x2="80" y2="122" stroke="rgba(255,255,255,0.25)" strokeWidth="1" />
-        <ellipse cx="68" cy="113" rx="10" ry="7" fill="rgba(255,255,255,0.18)" />
-      </motion.g>
-
-      {/* Central "20%" text — 3D layered */}
-      <text x="80" y="66" textAnchor="middle" fontSize="38" fontWeight="900"
-        fontFamily="'Plus Jakarta Sans', sans-serif" fill="rgba(120,60,0,0.4)"
-        transform="translate(2,3)">20%</text>
-      <text x="80" y="66" textAnchor="middle" fontSize="38" fontWeight="900"
-        fontFamily="'Plus Jakarta Sans', sans-serif" fill="rgba(255,140,0,0.7)"
-        transform="translate(1,1.5)">20%</text>
-      <motion.text x="80" y="66" textAnchor="middle" fontSize="38" fontWeight="900"
-        fontFamily="'Plus Jakarta Sans', sans-serif"
-        fill="url(#dg-pill1)"
-        filter="url(#dg-glow)"
-        animate={{ opacity: [0.9, 1, 0.9] }}
-        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}>
-        20%
-      </motion.text>
-
-      {/* "OFF" tag */}
-      <rect x="58" y="72" width="44" height="18" rx="9" fill="rgba(255,160,0,0.25)" stroke="rgba(255,200,0,0.5)" strokeWidth="1" />
-      <text x="80" y="85" textAnchor="middle" fontSize="11" fontWeight="700"
-        fontFamily="'Plus Jakarta Sans', sans-serif" fill="#FFE066" letterSpacing="2">OFF</text>
+      {/* ── Bottom culet sparkle ─────────────────────────────────── */}
+      <motion.circle
+        cx="80" cy="138" r="3"
+        fill="rgba(200,220,255,0.7)"
+        filter="url(#ec-spec)"
+        animate={{ opacity: [0.4, 1, 0.4], scale: [0.8, 1.4, 0.8] }}
+        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+        style={{ transformOrigin: '80px 138px' }}
+      />
     </svg>
   );
 }
@@ -455,7 +586,7 @@ const TILES = [
     border:   'rgba(255,200,60,0.22)',
     bg:       'linear-gradient(145deg, rgba(255,170,0,0.13) 0%, rgba(255,100,0,0.06) 100%)',
     shine:    'rgba(255,210,100,0.18)',
-    Illustration: DiscountIllustration,
+    Illustration: EnergyCrystalIllustration,
   },
   {
     headline: 'FREE BP Check',
