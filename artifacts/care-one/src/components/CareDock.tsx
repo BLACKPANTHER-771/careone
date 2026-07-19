@@ -81,7 +81,7 @@ export default function CareDock() {
 
         {/* Button 1 - Call */}
         <DockButton 
-          href="tel:8826775758"
+          href="tel:8826775158"
           icon={<Phone className="w-7 h-7" style={{ color: '#00C880', filter: iconGlow ? 'drop-shadow(0 0 8px rgba(0,200,128,0.8))' : 'none', transition: 'filter 0.3s' }} />}
           label="CALL NOW"
         />
@@ -100,7 +100,7 @@ export default function CareDock() {
 
         {/* Button 3 - WhatsApp */}
         <DockButton 
-          href="https://wa.me/918826775758?text=Hello%20CARE%20ONE%2C%20I%20would%20like%20to%20enquire%20about%20medicines."
+          href="https://wa.me/918826775158?text=Hello%20CARE%20ONE%2C%20I%20would%20like%20to%20enquire%20about%20medicines."
           icon={<WhatsAppIcon className="w-7 h-7" style={{ color: '#25D366' }} />}
           label="WHATSAPP"
           target="_blank"
