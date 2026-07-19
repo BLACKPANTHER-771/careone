@@ -100,7 +100,7 @@ export default function LocationSection() {
               {/* Monospaced Address */}
               <div className="font-mono text-sm text-white/70 leading-relaxed uppercase tracking-wider space-y-1">
                 <p><span className="text-cyan-400">LOC:</span> SHOP NO. PL-012</p>
-                <p><span className="opacity-0">LOC: </span>BGH-A, SITE-C</p>
+                <p><span className="opacity-0">LOC: </span> SITE-C</p>
                 <p><span className="opacity-0">LOC: </span>PARAMOUNT GOLFMART</p>
                 <p><span className="opacity-0">LOC: </span>BELOW ICICI BANK</p>
                 <p><span className="opacity-0">LOC: </span>SURAJPUR, GREATER NOIDA</p>
@@ -120,7 +120,7 @@ export default function LocationSection() {
               </RippleButton>
 
               <RippleButton 
-                href="tel:8826775758"
+                href="tel:8826775158"
                 className="group flex items-center justify-center gap-3 bg-white/5 border border-white/10 hover:bg-white/10 text-white px-8 py-4 rounded-xl font-medium tracking-wide transition-all"
               >
                 <Phone className="w-5 h-5 text-white/70 relative z-10" />
