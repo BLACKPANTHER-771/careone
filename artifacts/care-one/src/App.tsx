@@ -8,7 +8,6 @@ import HealthCheckSection from './components/HealthCheckSection';
 import DeliverySection from './components/DeliverySection';
 import LocationSection from './components/LocationSection';
 import ContactSection from './components/ContactSection';
-import Footer from './components/Footer';
 import PulseIdentity from './components/PulseIdentity';
 import CareDock from './components/CareDock';
 import DomeEnvironment from './components/DomeEnvironment';
@@ -27,7 +26,6 @@ function MainLayout() {
       <LocationSection />
       <ContactSection />
       <PulseIdentity height="h-24" isEnd />
-      <Footer />
     </div>
   );
 }
