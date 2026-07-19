@@ -3,7 +3,7 @@ import { Phone } from 'lucide-react';
 import RippleButton from './RippleButton';
 
 export default function ContactSection() {
-  const numberStr = "8826775758";
+  const numberStr = "8826775158";
   
   return (
     <section className="py-32 w-full relative min-h-[80vh] flex flex-col justify-center">
@@ -57,7 +57,7 @@ export default function ContactSection() {
           className="w-full max-w-sm flex flex-col items-center gap-6"
         >
           <RippleButton 
-            href="tel:8826775758"
+            href="tel:8826775158"
             className="w-full inline-flex items-center justify-center gap-3 bg-cyan-400 text-black px-12 py-5 rounded-2xl font-bold text-lg tracking-widest shadow-[0_0_30px_rgba(0,229,255,0.3)] hover:shadow-[0_0_50px_rgba(0,229,255,0.6)] transition-all hover:scale-[1.02]"
           >
             <Phone className="w-5 h-5 relative z-10" />
