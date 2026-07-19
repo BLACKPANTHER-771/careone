@@ -266,14 +266,14 @@ export default function HeroSection() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
               </span>
-              <span className="text-sm font-medium tracking-wide text-white/80">OPEN NOW — 8:00 AM – 11:00 PM</span>
+              <span className="text-sm font-medium tracking-wide text-white/80">OPEN NOW — 9:00 AM – 11:00 PM</span>
             </>
           ) : (
             <>
               <span className="relative flex h-2.5 w-2.5">
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-destructive" />
               </span>
-              <span className="text-sm font-medium tracking-wide text-white/80">CLOSED · Opens Tomorrow at 8:00 AM</span>
+              <span className="text-sm font-medium tracking-wide text-white/80">CLOSED · Opens Tomorrow at 9:00 AM</span>
             </>
           )}
         </motion.div>
@@ -353,7 +353,7 @@ export default function HeroSection() {
           className="flex flex-col sm:flex-row gap-4 w-full max-w-sm sm:max-w-none sm:w-auto"
         >
           <RippleButton
-            href="tel:8826775758"
+            href="tel:8826775158"
             className="group inline-flex items-center justify-center gap-3 bg-cyan-400 text-black px-8 py-5 rounded-2xl font-bold text-lg tracking-wide shadow-[0_0_30px_rgba(0,229,255,0.4)] transition-all hover:scale-105 hover:shadow-[0_0_50px_rgba(0,229,255,0.6)]"
           >
             <Phone className="w-6 h-6 relative z-10" />
